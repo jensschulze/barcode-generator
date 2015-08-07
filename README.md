@@ -1,1 +1,2 @@
-# barcode-generator
+# Symfony Barcode Generator
+
