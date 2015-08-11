@@ -7,7 +7,7 @@
     "authors": [
         {"name": "Akhtar Khan", "email": "er.akhtarkhan@gmail.com"}
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "require": {
         "php": ">=5.3.2"
     },
