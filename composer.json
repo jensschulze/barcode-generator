@@ -8,6 +8,7 @@
         {"name": "Akhtar Khan", "email": "er.akhtarkhan@gmail.com"}
     ],
     "minimum-stability": "stable",
+    prefer-stable: true
     "require": {
         "php": ">=5.3.2"
     },
