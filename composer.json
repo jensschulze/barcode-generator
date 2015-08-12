@@ -8,13 +8,14 @@
         {"name": "Akhtar Khan", "email": "er.akhtarkhan@gmail.com"}
     ],
     "minimum-stability": "dev",
+    "version" : "1.0.0-dev",
     "prefer-stable": true,
     "require": {
         "php": ">=5.3.2"
     },
     "autoload": {
         "psr-4": { 
-            "CodeItNow\\BarcodeBundle\\": "CodeItNow\\BarcodeBundle\\" 
+            "CodeItNow\\": "CodeItNow/" 
         }
     }
 }
