@@ -36,7 +36,12 @@ class BarcodeGenerator extends BarcodeType {
      * Font path for barcode
      */
     private $font;
-    
+
+    /**
+     * Font size for text
+     */
+    private $fontSize;
+
     /**
      * Barcode type such as code128, code39 etc.
      */
@@ -63,7 +68,7 @@ class BarcodeGenerator extends BarcodeType {
     private $allowedFormats = array(
         'PNG', 'JPEG', 'GIF', 'WBMP'
     );
-    
+
     /**
      * Set Resolution
      * @param int $scale
@@ -137,6 +142,15 @@ class BarcodeGenerator extends BarcodeType {
     }
 
     /**
+     * Set font size
+     * @param int $fontSize
+     */
+    public function setFontSize($fontSize)
+    {
+        $this->fontSize = $fontSize;
+    }
+
+    /**
      * Generate barcode
      * @param string $text      Barcode text to generate
      * @param string $type      Barcode type such as code128
@@ -173,7 +187,9 @@ class BarcodeGenerator extends BarcodeType {
             $textColor = new CINColor($this->foregroundColor);
             $backgroudColor = new CINColor($this->backgroundColor);
             $fontPath = isset($this->font) ? $this->font : $this->_getDefaultFont();
-            $font = new CINFontFile($fontPath, 18);
+
+            $font = new CINFontFile($fontPath, (is_int($this->fontSize)) ? $this->fontSize : 18);
+
             $codeClass = "\\CodeItNow\\BarcodeBundle\\Generator\\".$this->barcodeType;
             $code = new $codeClass();
             if($this->scale){
