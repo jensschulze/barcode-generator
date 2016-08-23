@@ -70,6 +70,11 @@ class BarcodeGenerator extends BarcodeType {
     );
 
     /**
+     * Clear labels flag
+     */
+    private $label = FALSE;
+
+    /**
      * Set Resolution
      * @param int $scale
      */
@@ -151,6 +156,14 @@ class BarcodeGenerator extends BarcodeType {
     }
 
     /**
+     * Set label, leave empty for automatic label
+     */
+    public function setLabel($label)
+    {
+        $this->label = $label;
+    }
+
+    /**
      * Generate barcode
      * @param string $text      Barcode text to generate
      * @param string $type      Barcode type such as code128
@@ -197,6 +210,9 @@ class BarcodeGenerator extends BarcodeType {
             }
             if($this->thickness){
                 $code->setThickness($this->thickness); // Thickness
+            }
+            if($this->label !== FALSE){
+                $code->setLabel($this->label);
             }
             $code->setForegroundColor($textColor); // Color of bars
             $code->setBackgroundColor($backgroudColor); // Color of spaces
