@@ -20,6 +20,7 @@ $barcode->setText("0123456789");
 $barcode->setType(BarcodeGenerator::Code128);
 $barcode->setScale(2);
 $barcode->setThickness(25);
+$barcode->setFontSize(10);
 $code = $barcode->generate();
 
 echo '<img src="data:image/png;base64,'.$code.'" />';
