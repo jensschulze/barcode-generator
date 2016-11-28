@@ -1,15 +1,15 @@
 # CodeItNow Barcode & QrCode Generator
-Barcode and QrCode generator library by [CodeItNow](http://www.codeitnow.in). You can use it with Custom PHP application or any PHP Framework such as Laravel, Symfony, Cakephp, Yii, Codeigneter etc.
+Barcode and Qr Code generator library by [CodeItNow](http://www.codeitnow.in). You can use it with Custom PHP application or any PHP Framework such as Laravel, Symfony, Cakephp, Yii, Codeigneter etc.
 
 ## Installation - 
-CodeItNow Barcode Generator can install by composer.
+CodeItNow Barcode & Qr Code Generator can install by composer.
 
 ```
 composer require codeitnowin/barcode
 ``` 
 
 ## Uses -
-Barcode and QrCode Generator library give output as base64 encoded png image.
+Barcode and Qr Code Generator library give output as base64 encoded png image.
 
 ### Example - QrCode:
 ```php
