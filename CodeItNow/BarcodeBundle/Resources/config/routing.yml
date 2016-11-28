@@ -1,3 +1,0 @@
-codeitnow_barcode_homepage:
-    path:     /barcode/{name}
-    defaults: { _controller: CodeItNowBarcodeBundle:Default:index }
