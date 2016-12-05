@@ -64,10 +64,14 @@ class CINDrawing {
     /**
      * Sets the filename.
      *
-     * @param string $filaneme
+     * @param string $filename
+     *
+     * @return CINDrawing
      */
     public function setFilename($filename) {
         $this->filename = $filename;
+
+        return $this;
     }
 
     /**
@@ -81,9 +85,13 @@ class CINDrawing {
      * Sets the image.
      *
      * @param resource $im
+     *
+     * @return CINDrawing
      */
     public function set_im($im) {
         $this->im = $im;
+
+        return $this;
     }
 
     /**
@@ -99,9 +107,13 @@ class CINDrawing {
      * Sets barcode for drawing.
      *
      * @param CINBarcode $barcode
+     *
+     * @return CINDrawing
      */
     public function setBarcode(CINBarcode $barcode) {
         $this->barcode = $barcode;
+
+        return $this;
     }
 
     /**
@@ -111,15 +123,21 @@ class CINDrawing {
      */
     public function getDPI() {
         return $this->dpi;
+
+        return $this;
     }
 
     /**
      * Sets the DPI for supported filetype.
      *
      * @param float $dpi
+     *
+     * @return CINDrawing
      */
     public function setDPI($dpi) {
         $this->dpi = $dpi;
+
+        return $this;
     }
 
     /**
@@ -135,9 +153,13 @@ class CINDrawing {
      * Sets the rotation angle in degree clockwise.
      *
      * @param float $degree
+     *
+     * @return CINDrawing
      */
     public function setRotationAngle($degree) {
         $this->rotateDegree = (float)$degree;
+
+        return $this;
     }
 
     /**

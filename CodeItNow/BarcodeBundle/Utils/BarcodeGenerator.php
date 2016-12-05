@@ -78,7 +78,7 @@ class BarcodeGenerator extends BarcodeType {
      * Set Resolution
      * @param int $scale
      *
-     * @return $this
+     * @return BarcodeGenerator
      */
     public function setScale($scale){
         $this->scale = $scale;
@@ -90,7 +90,7 @@ class BarcodeGenerator extends BarcodeType {
      * Set Thickness or Height
      * @param int $thickness
      *
-     * @return $this
+     * @return BarcodeGenerator
      */
     public function setThickness($thickness){
         $this->thickness = $thickness;
@@ -102,7 +102,7 @@ class BarcodeGenerator extends BarcodeType {
      * Set Text or barcode color
      * @param string $foregroundColor
      *
-     * @return $this
+     * @return BarcodeGenerator
      */
     public function setForegroundColor($foregroundColor){
         $this->foregroundColor = $foregroundColor;
@@ -114,7 +114,7 @@ class BarcodeGenerator extends BarcodeType {
      * Set background color
      * @param string $backgroundColor
      *
-     * @return $this
+     * @return BarcodeGenerator
      */
     public function setBackgroundColor($backgroundColor){
         $this->backgroundColor = $backgroundColor;
@@ -126,7 +126,7 @@ class BarcodeGenerator extends BarcodeType {
      * Set font path to use in barcode text
      * @param string $font
      *
-     * @return $this
+     * @return BarcodeGenerator
      */
     public function setFont($font){
         $this->font = $font;
@@ -138,7 +138,7 @@ class BarcodeGenerator extends BarcodeType {
      * Set Barcode type such as code128
      * @param string $type
      *
-     * @return $this
+     * @return BarcodeGenerator
      */
     public function setType($type){
         $this->barcodeType = $type;
@@ -150,7 +150,7 @@ class BarcodeGenerator extends BarcodeType {
      * Set barcode format such as png, gif, jpeg
      * @param string $format
      *
-     * @return $this
+     * @return BarcodeGenerator
      */
     public function setFormat($format){
         $this->format = $format;
@@ -162,7 +162,7 @@ class BarcodeGenerator extends BarcodeType {
      * Set text to generate barcode
      * @param string $text
      *
-     * @return $this
+     * @return BarcodeGenerator
      */
     public function setText($text){
         $this->text = $text;
@@ -174,7 +174,7 @@ class BarcodeGenerator extends BarcodeType {
      * Set filename with path to save barcode
      * @param string $filename
      *
-     * @return $this
+     * @return BarcodeGenerator
      */
     public function setFilename($filename){
         $this->filename = $filename;
@@ -186,7 +186,7 @@ class BarcodeGenerator extends BarcodeType {
      * Set font size
      * @param int $fontSize
      *
-     * @return $this
+     * @return BarcodeGenerator
      */
     public function setFontSize($fontSize)
     {
