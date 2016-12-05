@@ -8,6 +8,7 @@
  */
 namespace CodeItNow\BarcodeBundle\Generator\Drawer;
 
+
 abstract class CINDraw {
     protected $im;
     protected $filename;

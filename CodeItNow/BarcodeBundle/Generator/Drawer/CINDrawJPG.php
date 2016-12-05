@@ -8,7 +8,7 @@
  * 
  */
 namespace CodeItNow\BarcodeBundle\Generator\Drawer;
-use CodeItNow\BarcodeBundle\Generator\Drawer\CINDraw;
+
 
 if (!function_exists('file_put_contents')) {
     function file_put_contents($filename, $data) {
