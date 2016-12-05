@@ -19,13 +19,16 @@
 namespace CodeItNow\BarcodeBundle\Generator;
 
 
-class CINupcext5 extends CINBarcode1D {
+class CINupcext5 extends CINBarcode1D
+{
     protected $codeParity = array();
+
 
     /**
      * Constructor.
      */
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
 
         $this->keys = array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9');
@@ -57,12 +60,14 @@ class CINupcext5 extends CINBarcode1D {
         );
     }
 
+
     /**
      * Draws the barcode.
      *
      * @param resource $im
      */
-    public function draw($im) {
+    public function draw($im)
+    {
         // Checksum
         $this->calculateChecksum();
 
@@ -80,27 +85,33 @@ class CINupcext5 extends CINBarcode1D {
         $this->drawText($im, 0, 0, $this->positionX, $this->thickness);
     }
 
+
     /**
      * Returns the maximal size of a barcode.
      *
      * @param int $w
      * @param int $h
+     *
      * @return int[]
      */
-    public function getDimension($w, $h) {
-        $startlength = 4;
-        $textlength = 5 * 7;
+    public function getDimension($w, $h)
+    {
+        $startlength     = 4;
+        $textlength      = 5 * 7;
         $intercharlength = 2 * 4;
 
         $w += $startlength + $textlength + $intercharlength;
         $h += $this->thickness;
+
         return parent::getDimension($w, $h);
     }
+
 
     /**
      * Adds the default label.
      */
-    protected function addDefaultLabel() {
+    protected function addDefaultLabel()
+    {
         parent::addDefaultLabel();
 
         if ($this->defaultLabel !== null) {
@@ -108,10 +119,12 @@ class CINupcext5 extends CINBarcode1D {
         }
     }
 
+
     /**
      * Validates the input.
      */
-    protected function validate() {
+    protected function validate()
+    {
         $c = strlen($this->text);
         if ($c === 0) {
             throw new CINParseException('upcext5', 'No data has been entered.');
@@ -132,26 +145,28 @@ class CINupcext5 extends CINBarcode1D {
         parent::validate();
     }
 
+
     /**
      * Overloaded method to calculate checksum.
      */
-    protected function calculateChecksum() {
+    protected function calculateChecksum()
+    {
         // Calculating Checksum
         // Consider the right-most digit of the message to be in an "odd" position,
         // and assign odd/even to each character moving from right to left
         // Odd Position = 3, Even Position = 9
         // Multiply it by the number
         // Add all of that and do ?mod10
-        $odd = true;
+        $odd                 = true;
         $this->checksumValue = 0;
-        $c = strlen($this->text);
+        $c                   = strlen($this->text);
         for ($i = $c; $i > 0; $i--) {
             if ($odd === true) {
                 $multiplier = 3;
-                $odd = false;
+                $odd        = false;
             } else {
                 $multiplier = 9;
-                $odd = true;
+                $odd        = true;
             }
 
             if (!isset($this->keys[$this->text[$i - 1]])) {
@@ -164,10 +179,12 @@ class CINupcext5 extends CINBarcode1D {
         $this->checksumValue = $this->checksumValue % 10;
     }
 
+
     /**
      * Overloaded method to display the checksum.
      */
-    protected function processChecksum() {
+    protected function processChecksum()
+    {
         if ($this->checksumValue === false) { // Calculate the checksum only once
             $this->calculateChecksum();
         }
@@ -179,14 +196,17 @@ class CINupcext5 extends CINBarcode1D {
         return false;
     }
 
+
     /**
      * Inverses the string when the $inverse parameter is equal to 1.
      *
      * @param string $text
-     * @param int $inverse
+     * @param int    $inverse
+     *
      * @return string
      */
-    private static function inverse($text, $inverse = 1) {
+    private static function inverse($text, $inverse = 1)
+    {
         if ($inverse === 1) {
             $text = strrev($text);
         }
@@ -194,4 +214,5 @@ class CINupcext5 extends CINBarcode1D {
         return $text;
     }
 }
+
 ?>

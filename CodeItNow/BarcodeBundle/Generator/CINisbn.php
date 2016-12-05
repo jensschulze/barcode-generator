@@ -15,27 +15,32 @@
 namespace CodeItNow\BarcodeBundle\Generator;
 
 
-class CINisbn extends CINean13 {
+class CINisbn extends CINean13
+{
     const GS1_AUTO = 0;
     const GS1_PREFIX978 = 1;
     const GS1_PREFIX979 = 2;
 
     private $gs1;
 
+
     /**
      * Constructor.
      *
      * @param int $gs1
      */
-    public function __construct($gs1 = self::GS1_AUTO) {
+    public function __construct($gs1 = self::GS1_AUTO)
+    {
         parent::__construct();
         $this->setGS1($gs1);
     }
 
+
     /**
      * Adds the default label.
      */
-    protected function addDefaultLabel() {
+    protected function addDefaultLabel()
+    {
         if ($this->isDefaultEanLabelEnabled()) {
             $isbn = $this->createISBNText();
             $font = $this->font;
@@ -59,8 +64,9 @@ class CINisbn extends CINean13 {
      *
      * @throws CINArgumentException
      */
-    public function setGS1($gs1) {
-        $gs1 = (int)$gs1;
+    public function setGS1($gs1)
+    {
+        $gs1 = (int) $gs1;
         if ($gs1 !== self::GS1_AUTO && $gs1 !== self::GS1_PREFIX978 && $gs1 !== self::GS1_PREFIX979) {
             throw new CINArgumentException('The GS1 argument must be CINisbn::GS1_AUTO, CINisbn::GS1_PREFIX978, or CINisbn::GS1_PREFIX979', 'gs1');
         }
@@ -68,10 +74,12 @@ class CINisbn extends CINean13 {
         $this->gs1 = $gs1;
     }
 
+
     /**
      * Check chars allowed.
      */
-    protected function checkCharsAllowed() {
+    protected function checkCharsAllowed()
+    {
         $c = strlen($this->text);
 
         // Special case, if we have 10 digits, the last one can be X
@@ -87,10 +95,12 @@ class CINisbn extends CINean13 {
         return parent::checkCharsAllowed();
     }
 
+
     /**
      * Check correct length.
      */
-    protected function checkCorrectLength() {
+    protected function checkCorrectLength()
+    {
         $c = strlen($this->text);
 
         // If we have 13 chars just flush the last one
@@ -116,12 +126,14 @@ class CINisbn extends CINean13 {
         }
     }
 
+
     /**
      * Creates the ISBN text.
      *
      * @return string
      */
-    private function createISBNText() {
+    private function createISBNText()
+    {
         $isbn = '';
         if (!empty($this->text)) {
             // We try to create the ISBN Text... the hyphen really depends the ISBN agency.
@@ -133,11 +145,11 @@ class CINisbn extends CINean13 {
                 $lastCharacter = '';
                 if ($c === 13) {
                     $lastCharacter = $this->text[12];
-                    $this->text = substr($this->text, 0, 12);
+                    $this->text    = substr($this->text, 0, 12);
                 }
 
                 $checksum = $this->processChecksum();
-                $isbn = 'ISBN ' . substr($this->text, 0, 3) . '-' . substr($this->text, 3, 9) . '-' . $checksum;
+                $isbn     = 'ISBN ' . substr($this->text, 0, 3) . '-' . substr($this->text, 3, 9) . '-' . $checksum;
 
                 // Put the last character back
                 if ($c === 13) {
@@ -161,4 +173,5 @@ class CINisbn extends CINean13 {
         return $isbn;
     }
 }
+
 ?>

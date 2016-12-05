@@ -2,7 +2,8 @@
 namespace CodeItNow\BarcodeBundle\Utils;
 
 
-class BarcodeType {
+class BarcodeType
+{
     /**
      * Codabar
      */

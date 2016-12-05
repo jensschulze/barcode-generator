@@ -5,12 +5,13 @@
  * Class for Label
  *
  *--------------------------------------------------------------------
- * 
+ *
  */
 namespace CodeItNow\BarcodeBundle\Generator;
 
 
-class CINLabel {
+class CINLabel
+{
     const POSITION_TOP = 0;
     const POSITION_RIGHT = 1;
     const POSITION_BOTTOM = 2;
@@ -48,15 +49,17 @@ class CINLabel {
      */
     private $foregroundColor;
 
+
     /**
      * Constructor.
      *
-     * @param string $text
+     * @param string  $text
      * @param CINFont $font
-     * @param int $position
-     * @param int $alignment
+     * @param int     $position
+     * @param int     $alignment
      */
-    public function __construct($text = '', $font = null, $position = self::POSITION_BOTTOM, $alignment = self::ALIGN_CENTER) {
+    public function __construct($text = '', $font = null, $position = self::POSITION_BOTTOM, $alignment = self::ALIGN_CENTER)
+    {
         $font = $font === null ? new CINFontPhp(5) : $font;
         $this->setFont($font);
         $this->setText($text);
@@ -69,31 +72,37 @@ class CINLabel {
         $this->setForegroundColor(new CINColor('black'));
     }
 
+
     /**
      * Gets the text.
      *
      * @return string
      */
-    public function getText() {
+    public function getText()
+    {
         return $this->font->getText();
     }
+
 
     /**
      * Sets the text.
      *
      * @param string $text
      */
-    public function setText($text) {
+    public function setText($text)
+    {
         $this->text = $text;
         $this->font->setText($this->text);
     }
+
 
     /**
      * Gets the font.
      *
      * @return CINFont
      */
-    public function getFont() {
+    public function getFont()
+    {
         return $this->font;
     }
 
@@ -105,7 +114,8 @@ class CINLabel {
      *
      * @throws CINArgumentException
      */
-    public function setFont($font) {
+    public function setFont($font)
+    {
         if ($font === null) {
             throw new CINArgumentException('Font cannot be null.', 'font');
         }
@@ -117,12 +127,14 @@ class CINLabel {
         $this->font->setForegroundColor($this->foregroundColor);
     }
 
+
     /**
      * Gets the text position for drawing.
      *
      * @return int
      */
-    public function getPosition() {
+    public function getPosition()
+    {
         return $this->position;
     }
 
@@ -134,7 +146,8 @@ class CINLabel {
      *
      * @throws CINArgumentException
      */
-    public function setPosition($position) {
+    public function setPosition($position)
+    {
         $position = intval($position);
         if ($position !== self::POSITION_TOP && $position !== self::POSITION_RIGHT && $position !== self::POSITION_BOTTOM && $position !== self::POSITION_LEFT) {
             throw new CINArgumentException('The text position must be one of a valid constant.', 'position');
@@ -143,12 +156,14 @@ class CINLabel {
         $this->position = $position;
     }
 
+
     /**
      * Gets the text alignment for drawing.
      *
      * @return int
      */
-    public function getAlignment() {
+    public function getAlignment()
+    {
         return $this->alignment;
     }
 
@@ -160,7 +175,8 @@ class CINLabel {
      *
      * @throws CINArgumentException
      */
-    public function setAlignment($alignment) {
+    public function setAlignment($alignment)
+    {
         $alignment = intval($alignment);
         if ($alignment !== self::ALIGN_LEFT && $alignment !== self::ALIGN_TOP && $alignment !== self::ALIGN_CENTER && $alignment !== self::ALIGN_RIGHT && $alignment !== self::ALIGN_BOTTOM) {
             throw new CINArgumentException('The text alignment must be one of a valid constant.', 'alignment');
@@ -169,98 +185,121 @@ class CINLabel {
         $this->alignment = $alignment;
     }
 
+
     /**
      * Gets the offset.
      *
      * @return int
      */
-    public function getOffset() {
+    public function getOffset()
+    {
         return $this->offset;
     }
+
 
     /**
      * Sets the offset.
      *
      * @param int $offset
      */
-    public function setOffset($offset) {
+    public function setOffset($offset)
+    {
         $this->offset = intval($offset);
     }
+
 
     /**
      * Gets the spacing.
      *
      * @return int
      */
-    public function getSpacing() {
+    public function getSpacing()
+    {
         return $this->spacing;
     }
+
 
     /**
      * Sets the spacing.
      *
      * @param int $spacing
      */
-    public function setSpacing($spacing) {
+    public function setSpacing($spacing)
+    {
         $this->spacing = max(0, intval($spacing));
     }
+
 
     /**
      * Gets the rotation angle in degree.
      *
      * @return int
      */
-    public function getRotationAngle() {
+    public function getRotationAngle()
+    {
         return $this->font->getRotationAngle();
     }
+
 
     /**
      * Sets the rotation angle in degree.
      *
      * @param int $rotationAngle
      */
-    public function setRotationAngle($rotationAngle) {
+    public function setRotationAngle($rotationAngle)
+    {
         $this->rotationAngle = intval($rotationAngle);
         $this->font->setRotationAngle($this->rotationAngle);
     }
+
 
     /**
      * Gets the background color in case of rotation.
      *
      * @return CINColor
      */
-    public function getBackgroundColor() {
+    public function getBackgroundColor()
+    {
         return $this->backgroundColor;
     }
+
 
     /**
      * Sets the background color in case of rotation.
      *
      * @param CINColor $backgroundColor
      */
-    public /*internal*/ function setBackgroundColor($backgroundColor) {
+    public /*internal*/
+    function setBackgroundColor(
+        $backgroundColor
+    ) {
         $this->backgroundColor = $backgroundColor;
         $this->font->setBackgroundColor($this->backgroundColor);
     }
+
 
     /**
      * Gets the foreground color.
      *
      * @return CINColor
      */
-    public function getForegroundColor() {
+    public function getForegroundColor()
+    {
         return $this->font->getForegroundColor();
     }
+
 
     /**
      * Sets the foreground color.
      *
      * @param CINColor $foregroundColor
      */
-    public function setForegroundColor($foregroundColor) {
+    public function setForegroundColor($foregroundColor)
+    {
         $this->foregroundColor = $foregroundColor;
         $this->font->setForegroundColor($this->foregroundColor);
     }
+
 
     /**
      * Gets the dimension taken by the label, including the spacing and offset.
@@ -269,13 +308,14 @@ class CINLabel {
      *
      * @return int[]
      */
-    public function getDimension() {
+    public function getDimension()
+    {
         $w = 0;
         $h = 0;
 
         $dimension = $this->font->getDimension();
-        $w = $dimension[0];
-        $h = $dimension[1];
+        $w         = $dimension[0];
+        $h         = $dimension[1];
 
         if ($this->position === self::POSITION_TOP || $this->position === self::POSITION_BOTTOM) {
             $h += $this->spacing;
@@ -288,6 +328,7 @@ class CINLabel {
         return array($w, $h);
     }
 
+
     /**
      * Draws the text.
      * The coordinate passed are the positions of the barcode.
@@ -295,12 +336,19 @@ class CINLabel {
      * $x2 and $y2 represent the bottom right corner.
      *
      * @param resource $im
-     * @param int $x1
-     * @param int $y1
-     * @param int $x2
-     * @param int $y2
+     * @param int      $x1
+     * @param int      $y1
+     * @param int      $x2
+     * @param int      $y2
      */
-    public /*internal*/ function draw($im, $x1, $y1, $x2, $y2) {
+    public /*internal*/
+    function draw(
+        $im,
+        $x1,
+        $y1,
+        $x2,
+        $y2
+    ) {
         $x = 0;
         $y = 0;
 
@@ -315,7 +363,7 @@ class CINLabel {
 
             if ($this->alignment === self::ALIGN_CENTER) {
                 $x = ($x2 - $x1) / 2 + $x1 - $fontDimension[0] / 2 + $this->offset;
-            } elseif ($this->alignment === self::ALIGN_LEFT)  {
+            } elseif ($this->alignment === self::ALIGN_LEFT) {
                 $x = $x1 + $this->offset;
             } else {
                 $x = $x2 + $this->offset - $fontDimension[0];
@@ -329,7 +377,7 @@ class CINLabel {
 
             if ($this->alignment === self::ALIGN_CENTER) {
                 $y = ($y2 - $y1) / 2 + $y1 - $fontDimension[1] / 2 + $this->offset;
-            } elseif ($this->alignment === self::ALIGN_TOP)  {
+            } elseif ($this->alignment === self::ALIGN_TOP) {
                 $y = $y1 + $this->offset;
             } else {
                 $y = $y2 + $this->offset - $fontDimension[1];
@@ -340,4 +388,5 @@ class CINLabel {
         $this->font->draw($im, $x, $y);
     }
 }
+
 ?>

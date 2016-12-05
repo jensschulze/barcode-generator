@@ -6,7 +6,7 @@
  * You can use get_im() to add other kind of form not held into these classes.
  *
  *--------------------------------------------------------------------
- * 
+ *
  */
 namespace CodeItNow\BarcodeBundle\Generator;
 
@@ -14,7 +14,8 @@ namespace CodeItNow\BarcodeBundle\Generator;
 use CodeItNow\BarcodeBundle\Generator\Drawer\CINDrawJPG;
 use CodeItNow\BarcodeBundle\Generator\Drawer\CINDrawPNG;
 
-class CINDrawing {
+class CINDrawing
+{
     const IMG_FORMAT_PNG = 1;
     const IMG_FORMAT_JPEG = 2;
     const IMG_FORMAT_GIF = 3;
@@ -59,27 +60,32 @@ class CINDrawing {
      * @param string   $filename
      * @param CINColor $color
      */
-    public function __construct($filename = null, CINColor $color) {
+    public function __construct($filename = null, CINColor $color)
+    {
         $this->im = null;
         $this->setFilename($filename);
-        $this->color = $color;
-        $this->dpi = null;
+        $this->color        = $color;
+        $this->dpi          = null;
         $this->rotateDegree = 0.0;
     }
+
 
     /**
      * Destructor.
      */
-    public function __destruct() {
+    public function __destruct()
+    {
         $this->destroy();
     }
+
 
     /**
      * Gets the filename.
      *
      * @return string
      */
-    public function getFilename() {
+    public function getFilename()
+    {
         return $this->filename;
     }
 
@@ -89,85 +95,104 @@ class CINDrawing {
      *
      * @param $filename
      */
-    public function setFilename($filename) {
+    public function setFilename($filename)
+    {
         $this->filename = $filename;
     }
+
 
     /**
      * @return resource.
      */
-    public function get_im() {
+    public function get_im()
+    {
         return $this->im;
     }
+
 
     /**
      * Sets the image.
      *
      * @param resource $im
      */
-    public function set_im($im) {
+    public function set_im($im)
+    {
         $this->im = $im;
     }
+
 
     /**
      * Gets barcode for drawing.
      *
      * @return CINBarcode
      */
-    public function getBarcode() {
+    public function getBarcode()
+    {
         return $this->barcode;
     }
+
 
     /**
      * Sets barcode for drawing.
      *
      * @param CINBarcode $barcode
      */
-    public function setBarcode(CINBarcode $barcode) {
+    public function setBarcode(CINBarcode $barcode)
+    {
         $this->barcode = $barcode;
     }
+
 
     /**
      * Gets the DPI for supported filetype.
      *
      * @return float
      */
-    public function getDPI() {
+    public function getDPI()
+    {
         return $this->dpi;
     }
+
 
     /**
      * Sets the DPI for supported filetype.
      *
      * @param float $dpi
      */
-    public function setDPI($dpi) {
+    public function setDPI($dpi)
+    {
         $this->dpi = $dpi;
     }
+
 
     /**
      * Gets the rotation angle in degree clockwise.
      *
      * @return float
      */
-    public function getRotationAngle() {
+    public function getRotationAngle()
+    {
         return $this->rotateDegree;
     }
+
 
     /**
      * Sets the rotation angle in degree clockwise.
      *
      * @param float $degree
      */
-    public function setRotationAngle($degree) {
-        $this->rotateDegree = (float)$degree;
+    public function setRotationAngle($degree)
+    {
+        $this->rotateDegree = (float) $degree;
     }
+
 
     /**
      * Draws the barcode on the image $im.
      */
-    public function draw() {
-        $size = $this->barcode->getDimension(0, 0);
+    public function draw()
+    {
+        $size    = $this->barcode->getDimension(0, 0);
         $this->w = max(1, $size[0]);
         $this->h = max(1, $size[1]);
         $this->init();
@@ -183,7 +208,8 @@ class CINDrawing {
      *
      * @throws CINDrawException
      */
-    public function finish($image_style = self::IMG_FORMAT_PNG, $quality = 100) {
+    public function finish($image_style = self::IMG_FORMAT_PNG, $quality = 100)
+    {
         $drawer = null;
 
         $im = $this->im;
@@ -220,12 +246,14 @@ class CINDrawing {
         }
     }
 
+
     /**
      * Writes the Error on the picture.
      *
      * @param \Throwable $exception
      */
-    public function drawException($exception) {
+    public function drawException($exception)
+    {
         $this->w = 1;
         $this->h = 1;
         $this->init();
@@ -236,10 +264,10 @@ class CINDrawing {
 
         $text = 'Error: ' . $exception->getMessage();
 
-        $width = imagefontwidth(2) * strlen($text);
+        $width  = imagefontwidth(2) * strlen($text);
         $height = imagefontheight(2);
         if ($width > $w || $height > $h) {
-            $width = max($w, $width);
+            $width  = max($w, $width);
             $height = max($h, $height);
 
             // We change the size of the image
@@ -253,17 +281,21 @@ class CINDrawing {
         imagestring($this->im, 2, 0, 0, $text, $black->allocate($this->im));
     }
 
+
     /**
      * Free the memory of PHP (called also by destructor).
      */
-    public function destroy() {
+    public function destroy()
+    {
         @imagedestroy($this->im);
     }
+
 
     /**
      * Init Image and color background.
      */
-    private function init() {
+    private function init()
+    {
         if ($this->im === null) {
             $this->im = imagecreatetruecolor($this->w, $this->h)
             or die('Can\'t Initialize the GD Libraty');
@@ -271,4 +303,5 @@ class CINDrawing {
         }
     }
 }
+
 ?>

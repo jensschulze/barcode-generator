@@ -3,7 +3,7 @@
 /**
  * QrCode
  * @author  Akhtar Khan <er.akhtarkhan@gmail.com>
- * @link http://www.codeitnow.in 
+ * @link    http://www.codeitnow.in
  */
 
 namespace CodeItNow\BarcodeBundle\Utils;
@@ -68,7 +68,7 @@ class QrCode
     /** @const int Vertical label alignment to the top and hide border */
     const LABEL_VALIGN_TOP_NO_BORDER = 2;
 
-    /** @const int Vertical label alignment to the middle*/
+    /** @const int Vertical label alignment to the middle */
     const LABEL_VALIGN_MIDDLE = 3;
 
     /** @const int Vertical label alignment to the bottom */
@@ -159,6 +159,7 @@ class QrCode
     /** @var string */
     protected $structure_append_original_data;
 
+
     /**
      * Class constructor.
      *
@@ -166,11 +167,12 @@ class QrCode
      */
     public function __construct($text = '')
     {
-        $this->setPath(dirname(__DIR__)."/Resources/data");
-        $this->setImagePath(dirname(__DIR__)."/Resources/image");
-        $this->setLabelFontPath(dirname(__DIR__)."/Resources/font/opensans.ttf");
+        $this->setPath(dirname(__DIR__) . "/Resources/data");
+        $this->setImagePath(dirname(__DIR__) . "/Resources/image");
+        $this->setLabelFontPath(dirname(__DIR__) . "/Resources/font/opensans.ttf");
         $this->setText($text);
     }
+
 
     /**
      * Set structure append.
@@ -184,13 +186,14 @@ class QrCode
      */
     public function setStructureAppend($n, $m, $parity, $original_data)
     {
-        $this->structure_append_n = $n;
-        $this->structure_append_m = $m;
-        $this->structure_append_parity = $parity;
+        $this->structure_append_n             = $n;
+        $this->structure_append_m             = $m;
+        $this->structure_append_parity        = $parity;
         $this->structure_append_original_data = $original_data;
 
         return $this;
     }
+
 
     /**
      * Set QR Code version.
@@ -208,6 +211,7 @@ class QrCode
         return $this;
     }
 
+
     /**
      * Return QR Code version.
      *
@@ -217,6 +221,7 @@ class QrCode
     {
         return $this->version;
     }
+
 
     /**
      * Set QR Code error correction level.
@@ -228,7 +233,7 @@ class QrCode
     public function setErrorCorrection($error_correction)
     {
         if (!is_numeric($error_correction)) {
-            $level_constant = 'CodeItNow\BarcodeBundle\Utils\QrCode::LEVEL_'.strtoupper($error_correction);
+            $level_constant   = 'CodeItNow\BarcodeBundle\Utils\QrCode::LEVEL_' . strtoupper($error_correction);
             $error_correction = constant($level_constant);
         }
 
@@ -239,6 +244,7 @@ class QrCode
         return $this;
     }
 
+
     /**
      * Return QR Code error correction level.
      *
@@ -248,6 +254,7 @@ class QrCode
     {
         return $this->error_correction;
     }
+
 
     /**
      * Set QR Code module size.
@@ -263,6 +270,7 @@ class QrCode
         return $this;
     }
 
+
     /**
      * Return QR Code module size.
      *
@@ -272,6 +280,7 @@ class QrCode
     {
         return $this->module_size;
     }
+
 
     /**
      * Set image type for rendering.
@@ -285,13 +294,14 @@ class QrCode
     public function setImageType($image_type)
     {
         if (!in_array($image_type, $this->image_types_available)) {
-            throw new Exception('QRCode: image type '.$image_type.' is invalid.');
+            throw new Exception('QRCode: image type ' . $image_type . ' is invalid.');
         }
 
         $this->image_type = $image_type;
 
         return $this;
     }
+
 
     /**
      * Return image type for rendering.
@@ -302,6 +312,7 @@ class QrCode
     {
         return $this->image_type;
     }
+
 
     /**
      * Set image type for rendering via extension.
@@ -321,6 +332,7 @@ class QrCode
         return $this;
     }
 
+
     /**
      * Set path to the images directory.
      *
@@ -335,6 +347,7 @@ class QrCode
         return $this;
     }
 
+
     /**
      * Return path to the images directory.
      *
@@ -344,6 +357,7 @@ class QrCode
     {
         return $this->image_path;
     }
+
 
     /**
      * Set path to the data directory.
@@ -359,6 +373,7 @@ class QrCode
         return $this;
     }
 
+
     /**
      * Return path to the data directory.
      *
@@ -368,6 +383,7 @@ class QrCode
     {
         return $this->path;
     }
+
 
     /**
      * Set text to hide in QR Code.
@@ -383,6 +399,7 @@ class QrCode
         return $this;
     }
 
+
     /**
      * Return text that will be hid in QR Code.
      *
@@ -392,6 +409,7 @@ class QrCode
     {
         return $this->text;
     }
+
 
     /**
      * Set QR Code size (width).
@@ -407,6 +425,7 @@ class QrCode
         return $this;
     }
 
+
     /**
      * Return QR Code size (width).
      *
@@ -416,6 +435,7 @@ class QrCode
     {
         return $this->size;
     }
+
 
     /**
      * Set padding around the QR Code.
@@ -431,6 +451,7 @@ class QrCode
         return $this;
     }
 
+
     /**
      * Return padding around the QR Code.
      *
@@ -440,6 +461,7 @@ class QrCode
     {
         return $this->padding;
     }
+
 
     /**
      * Set draw required four-module wide margin.
@@ -455,6 +477,7 @@ class QrCode
         return $this;
     }
 
+
     /**
      * Return draw required four-module wide margin.
      *
@@ -464,6 +487,7 @@ class QrCode
     {
         return $this->draw_quiet_zone;
     }
+
 
     /**
      * Set draw border around QR Code.
@@ -479,6 +503,7 @@ class QrCode
         return $this;
     }
 
+
     /**
      * Return draw border around QR Code.
      *
@@ -488,6 +513,7 @@ class QrCode
     {
         return $this->draw_border;
     }
+
 
     /**
      * Set QR Code label (text).
@@ -503,6 +529,7 @@ class QrCode
         return $this;
     }
 
+
     /**
      * Return QR Code label (text).
      *
@@ -512,6 +539,7 @@ class QrCode
     {
         return $this->label;
     }
+
 
     /**
      * Set QR Code label font size.
@@ -527,6 +555,7 @@ class QrCode
         return $this;
     }
 
+
     /**
      * Return QR Code label font size.
      *
@@ -536,6 +565,7 @@ class QrCode
     {
         return $this->label_font_size;
     }
+
 
     /**
      * Set QR Code label font path.
@@ -551,6 +581,7 @@ class QrCode
         return $this;
     }
 
+
     /**
      * Return path to the QR Code label's TTF font file.
      *
@@ -560,6 +591,7 @@ class QrCode
     {
         return $this->label_font_path;
     }
+
 
     /**
      * Set label horizontal alignment.
@@ -575,6 +607,7 @@ class QrCode
         return $this;
     }
 
+
     /**
      * Return label horizontal alignment.
      *
@@ -584,6 +617,7 @@ class QrCode
     {
         return $this->label_halign;
     }
+
 
     /**
      * Set label vertical alignment.
@@ -599,6 +633,7 @@ class QrCode
         return $this;
     }
 
+
     /**
      * Return label vertical alignment.
      *
@@ -608,6 +643,7 @@ class QrCode
     {
         return $this->label_valign;
     }
+
 
     /**
      * Set foreground color of the QR Code.
@@ -627,6 +663,7 @@ class QrCode
         return $this;
     }
 
+
     /**
      * Return foreground color of the QR Code.
      *
@@ -636,6 +673,7 @@ class QrCode
     {
         return $this->color_foreground;
     }
+
 
     /**
      * Set background color of the QR Code.
@@ -655,6 +693,7 @@ class QrCode
         return $this;
     }
 
+
     /**
      * Return background color of the QR Code.
      *
@@ -664,6 +703,7 @@ class QrCode
     {
         return $this->color_background;
     }
+
 
     /**
      * Return the image resource.
@@ -679,6 +719,7 @@ class QrCode
         return $this->image;
     }
 
+
     /**
      * Return the data URI.
      *
@@ -691,11 +732,12 @@ class QrCode
         }
 
         ob_start();
-        call_user_func('image'.$this->image_type, $this->image);
+        call_user_func('image' . $this->image_type, $this->image);
         $contents = ob_get_clean();
 
-        return 'data:image/'.$this->image_type.';base64,'.base64_encode($contents);
+        return 'data:image/' . $this->image_type . ';base64,' . base64_encode($contents);
     }
+
 
     /**
      * Render the QR Code then save it to given file name.
@@ -710,6 +752,7 @@ class QrCode
 
         return $this;
     }
+
 
     /**
      * Render the QR Code then save it to given file name or
@@ -735,18 +778,18 @@ class QrCode
             $format = $this->image_type;
         }
 
-        if (!function_exists('image'.$format)) {
-            throw new Exception('QRCode: function image'.$format.' does not exists.');
+        if (!function_exists('image' . $format)) {
+            throw new Exception('QRCode: function image' . $format . ' does not exists.');
         }
 
         if ($filename === null) {
-            $success = call_user_func('image'.$format, $this->image);
+            $success = call_user_func('image' . $format, $this->image);
         } else {
-            $success = call_user_func_array('image'.$format, array($this->image, $filename));
+            $success = call_user_func_array('image' . $format, array($this->image, $filename));
         }
 
         if ($success === false) {
-            throw new Exception('QRCode: function image'.$format.' failed.');
+            throw new Exception('QRCode: function image' . $format . ' failed.');
         }
 
         return $this;
@@ -757,10 +800,13 @@ class QrCode
      * Generate base64 image
      * @return string
      */
-    public function generate(){
+    public function generate()
+    {
         $image = $this->get();
+
         return base64_encode($image);
     }
+
 
     /**
      * Returns the content type corresponding to the image type.
@@ -769,10 +815,11 @@ class QrCode
      */
     public function getContentType()
     {
-        $contentType = 'image/'.$this->image_type;
+        $contentType = 'image/' . $this->image_type;
 
         return $contentType;
     }
+
 
     /**
      * Create QR Code and return its content.
@@ -796,21 +843,22 @@ class QrCode
             $format = $this->image_type;
         }
 
-        if (!function_exists('image'.$format)) {
-            throw new Exception('QRCode: function image'.$format.' does not exists.');
+        if (!function_exists('image' . $format)) {
+            throw new Exception('QRCode: function image' . $format . ' does not exists.');
         }
 
         ob_start();
-        $success = call_user_func('image'.$format, $this->image);
+        $success = call_user_func('image' . $format, $this->image);
 
         if ($success === false) {
-            throw new Exception('QRCode: function image'.$format.' failed.');
+            throw new Exception('QRCode: function image' . $format . ' failed.');
         }
 
         $content = ob_get_clean();
 
         return $content;
     }
+
 
     /**
      * Create the image.
@@ -821,20 +869,20 @@ class QrCode
     public function create()
     {
         $image_path = $this->image_path;
-        $path = $this->path;
+        $path       = $this->path;
 
         $version_ul = 40;
 
         $qrcode_data_string = $this->text;//Previously from $_GET["d"];
 
         $qrcode_error_correct = $this->error_correction;//Previously from $_GET["e"];
-        $qrcode_module_size = $this->module_size;//Previously from $_GET["s"];
-        $qrcode_version = $this->version;//Previously from $_GET["v"];
-        $qrcode_image_type = $this->image_type;//Previously from $_GET["t"];
+        $qrcode_module_size   = $this->module_size;//Previously from $_GET["s"];
+        $qrcode_version       = $this->version;//Previously from $_GET["v"];
+        $qrcode_image_type    = $this->image_type;//Previously from $_GET["t"];
 
-        $qrcode_structureappend_n = $this->structure_append_n;//Previously from $_GET["n"];
-        $qrcode_structureappend_m = $this->structure_append_m;//Previously from $_GET["m"];
-        $qrcode_structureappend_parity = $this->structure_append_parity;//Previously from $_GET["p"];
+        $qrcode_structureappend_n            = $this->structure_append_n;//Previously from $_GET["n"];
+        $qrcode_structureappend_m            = $this->structure_append_m;//Previously from $_GET["m"];
+        $qrcode_structureappend_parity       = $this->structure_append_parity;//Previously from $_GET["p"];
         $qrcode_structureappend_originaldata = $this->structure_append_original_data;//Previously from $_GET["o"];
 
         if ($qrcode_module_size > 0) {
@@ -851,22 +899,23 @@ class QrCode
         }
         $data_counter = 0;
         if ($qrcode_structureappend_n > 1
-         && $qrcode_structureappend_n <= 16
-         && $qrcode_structureappend_m > 0
-         && $qrcode_structureappend_m <= 16) {
+            && $qrcode_structureappend_n <= 16
+            && $qrcode_structureappend_m > 0
+            && $qrcode_structureappend_m <= 16
+        ) {
             $data_value[0] = 3;
-            $data_bits[0] = 4;
+            $data_bits[0]  = 4;
 
             $data_value[1] = $qrcode_structureappend_m - 1;
-            $data_bits[1] = 4;
+            $data_bits[1]  = 4;
 
             $data_value[2] = $qrcode_structureappend_n - 1;
-            $data_bits[2] = 4;
+            $data_bits[2]  = 4;
 
             $originaldata_length = strlen($qrcode_structureappend_originaldata);
             if ($originaldata_length > 1) {
                 $qrcode_structureappend_parity = 0;
-                $i = 0;
+                $i                             = 0;
                 while ($i < $originaldata_length) {
                     $qrcode_structureappend_parity = ($qrcode_structureappend_parity ^ ord(substr($qrcode_structureappend_originaldata, $i, 1)));
                     ++$i;
@@ -874,7 +923,7 @@ class QrCode
             }
 
             $data_value[3] = $qrcode_structureappend_parity;
-            $data_bits[3] = 8;
+            $data_bits[3]  = 8;
 
             $data_counter = 4;
         }
@@ -887,53 +936,174 @@ class QrCode
             if (preg_match("/[^0-9A-Z \$\*\%\+\.\/\:\-]/", $qrcode_data_string) != 0) {
                 /*  --- 8bit byte mode */
 
-                $codeword_num_plus = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8,
-        8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, );
+                $codeword_num_plus = array(
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    8,
+                    8,
+                    8,
+                    8,
+                    8,
+                    8,
+                    8,
+                    8,
+                    8,
+                    8,
+                    8,
+                    8,
+                    8,
+                    8,
+                    8,
+                    8,
+                    8,
+                    8,
+                    8,
+                    8,
+                    8,
+                    8,
+                    8,
+                    8,
+                    8,
+                    8,
+                    8,
+                    8,
+                    8,
+                    8,
+                    8,
+                );
 
                 $data_value[$data_counter] = 4;
                 ++$data_counter;
-                $data_value[$data_counter] = $data_length;
-                $data_bits[$data_counter] = 8;   /* #version 1-9 */
+                $data_value[$data_counter]  = $data_length;
+                $data_bits[$data_counter]   = 8;   /* #version 1-9 */
                 $codeword_num_counter_value = $data_counter;
 
                 ++$data_counter;
                 $i = 0;
                 while ($i < $data_length) {
                     $data_value[$data_counter] = ord(substr($qrcode_data_string, $i, 1));
-                    $data_bits[$data_counter] = 8;
+                    $data_bits[$data_counter]  = 8;
                     ++$data_counter;
                     ++$i;
                 }
             } else {
                 /* ---- alphanumeric mode */
 
-                $codeword_num_plus = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
-        4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, );
+                $codeword_num_plus = array(
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    2,
+                    2,
+                    2,
+                    2,
+                    2,
+                    2,
+                    2,
+                    2,
+                    2,
+                    2,
+                    2,
+                    2,
+                    2,
+                    2,
+                    2,
+                    2,
+                    2,
+                    4,
+                    4,
+                    4,
+                    4,
+                    4,
+                    4,
+                    4,
+                    4,
+                    4,
+                    4,
+                    4,
+                    4,
+                    4,
+                    4,
+                );
 
                 $data_value[$data_counter] = 2;
                 ++$data_counter;
-                $data_value[$data_counter] = $data_length;
-                $data_bits[$data_counter] = 9;  /* #version 1-9 */
+                $data_value[$data_counter]  = $data_length;
+                $data_bits[$data_counter]   = 9;  /* #version 1-9 */
                 $codeword_num_counter_value = $data_counter;
 
-                $alphanumeric_character_hash = array('0' => 0, '1' => 1, '2' => 2, '3' => 3, '4' => 4,
-        '5' => 5, '6' => 6, '7' => 7, '8' => 8, '9' => 9, 'A' => 10, 'B' => 11, 'C' => 12, 'D' => 13, 'E' => 14,
-        'F' => 15, 'G' => 16, 'H' => 17, 'I' => 18, 'J' => 19, 'K' => 20, 'L' => 21, 'M' => 22, 'N' => 23,
-        'O' => 24, 'P' => 25, 'Q' => 26, 'R' => 27, 'S' => 28, 'T' => 29, 'U' => 30, 'V' => 31,
-        'W' => 32, 'X' => 33, 'Y' => 34, 'Z' => 35, ' ' => 36, '$' => 37, '%' => 38, '*' => 39,
-        '+' => 40, '-' => 41, '.' => 42, '/' => 43, ':' => 44, );
+                $alphanumeric_character_hash = array(
+                    '0' => 0,
+                    '1' => 1,
+                    '2' => 2,
+                    '3' => 3,
+                    '4' => 4,
+                    '5' => 5,
+                    '6' => 6,
+                    '7' => 7,
+                    '8' => 8,
+                    '9' => 9,
+                    'A' => 10,
+                    'B' => 11,
+                    'C' => 12,
+                    'D' => 13,
+                    'E' => 14,
+                    'F' => 15,
+                    'G' => 16,
+                    'H' => 17,
+                    'I' => 18,
+                    'J' => 19,
+                    'K' => 20,
+                    'L' => 21,
+                    'M' => 22,
+                    'N' => 23,
+                    'O' => 24,
+                    'P' => 25,
+                    'Q' => 26,
+                    'R' => 27,
+                    'S' => 28,
+                    'T' => 29,
+                    'U' => 30,
+                    'V' => 31,
+                    'W' => 32,
+                    'X' => 33,
+                    'Y' => 34,
+                    'Z' => 35,
+                    ' ' => 36,
+                    '$' => 37,
+                    '%' => 38,
+                    '*' => 39,
+                    '+' => 40,
+                    '-' => 41,
+                    '.' => 42,
+                    '/' => 43,
+                    ':' => 44,
+                );
 
                 $i = 0;
                 ++$data_counter;
                 while ($i < $data_length) {
                     if (($i % 2) == 0) {
                         $data_value[$data_counter] = $alphanumeric_character_hash[substr($qrcode_data_string, $i, 1)];
-                        $data_bits[$data_counter] = 6;
+                        $data_bits[$data_counter]  = 6;
                     } else {
                         $data_value[$data_counter] = $data_value[$data_counter] * 45 + $alphanumeric_character_hash[substr($qrcode_data_string, $i, 1)];
-                        $data_bits[$data_counter] = 11;
+                        $data_bits[$data_counter]  = 11;
                         ++$data_counter;
                     }
                     ++$i;
@@ -942,14 +1112,54 @@ class QrCode
         } else {
             /* ---- numeric mode */
 
-            $codeword_num_plus = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
-        4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, );
+            $codeword_num_plus = array(
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                2,
+                2,
+                2,
+                2,
+                2,
+                2,
+                2,
+                2,
+                2,
+                2,
+                2,
+                2,
+                2,
+                2,
+                2,
+                2,
+                2,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+            );
 
             $data_value[$data_counter] = 1;
             ++$data_counter;
-            $data_value[$data_counter] = $data_length;
-            $data_bits[$data_counter] = 10;   /* #version 1-9 */
+            $data_value[$data_counter]  = $data_length;
+            $data_bits[$data_counter]   = 10;   /* #version 1-9 */
             $codeword_num_counter_value = $data_counter;
 
             $i = 0;
@@ -957,7 +1167,7 @@ class QrCode
             while ($i < $data_length) {
                 if (($i % 3) == 0) {
                     $data_value[$data_counter] = substr($qrcode_data_string, $i, 1);
-                    $data_bits[$data_counter] = 4;
+                    $data_bits[$data_counter]  = 4;
                 } else {
                     $data_value[$data_counter] = $data_value[$data_counter] * 10 + substr($qrcode_data_string, $i, 1);
                     if (($i % 3) == 1) {
@@ -973,21 +1183,23 @@ class QrCode
         if (array_key_exists($data_counter, $data_bits) && $data_bits[$data_counter] > 0) {
             ++$data_counter;
         }
-        $i = 0;
+        $i               = 0;
         $total_data_bits = 0;
         while ($i < $data_counter) {
             $total_data_bits += $data_bits[$i];
             ++$i;
         }
 
-        $ecc_character_hash = array('L' => '1',
-        'l' => '1',
-        'M' => '0',
-        'm' => '0',
-        'Q' => '3',
-        'q' => '3',
-        'H' => '2',
-        'h' => '2', );
+        $ecc_character_hash = array(
+            'L' => '1',
+            'l' => '1',
+            'M' => '0',
+            'm' => '0',
+            'Q' => '3',
+            'q' => '3',
+            'H' => '2',
+            'h' => '2',
+        );
 
         if (!is_numeric($qrcode_error_correct)) {
             $ec = @$ecc_character_hash[$qrcode_error_correct];
@@ -1002,33 +1214,178 @@ class QrCode
         $max_data_bits = 0;
 
         $max_data_bits_array = array(
-        0, 128, 224, 352, 512, 688, 864, 992, 1232, 1456, 1728,
-        2032, 2320, 2672, 2920, 3320, 3624, 4056, 4504, 5016, 5352,
-        5712, 6256, 6880, 7312, 8000, 8496, 9024, 9544, 10136, 10984,
-        11640, 12328, 13048, 13800, 14496, 15312, 15936, 16816, 17728, 18672,
+            0,
+            128,
+            224,
+            352,
+            512,
+            688,
+            864,
+            992,
+            1232,
+            1456,
+            1728,
+            2032,
+            2320,
+            2672,
+            2920,
+            3320,
+            3624,
+            4056,
+            4504,
+            5016,
+            5352,
+            5712,
+            6256,
+            6880,
+            7312,
+            8000,
+            8496,
+            9024,
+            9544,
+            10136,
+            10984,
+            11640,
+            12328,
+            13048,
+            13800,
+            14496,
+            15312,
+            15936,
+            16816,
+            17728,
+            18672,
 
-        152, 272, 440, 640, 864, 1088, 1248, 1552, 1856, 2192,
-        2592, 2960, 3424, 3688, 4184, 4712, 5176, 5768, 6360, 6888,
-        7456, 8048, 8752, 9392, 10208, 10960, 11744, 12248, 13048, 13880,
-        14744, 15640, 16568, 17528, 18448, 19472, 20528, 21616, 22496, 23648,
+            152,
+            272,
+            440,
+            640,
+            864,
+            1088,
+            1248,
+            1552,
+            1856,
+            2192,
+            2592,
+            2960,
+            3424,
+            3688,
+            4184,
+            4712,
+            5176,
+            5768,
+            6360,
+            6888,
+            7456,
+            8048,
+            8752,
+            9392,
+            10208,
+            10960,
+            11744,
+            12248,
+            13048,
+            13880,
+            14744,
+            15640,
+            16568,
+            17528,
+            18448,
+            19472,
+            20528,
+            21616,
+            22496,
+            23648,
 
-        72, 128, 208, 288, 368, 480, 528, 688, 800, 976,
-        1120, 1264, 1440, 1576, 1784, 2024, 2264, 2504, 2728, 3080,
-        3248, 3536, 3712, 4112, 4304, 4768, 5024, 5288, 5608, 5960,
-        6344, 6760, 7208, 7688, 7888, 8432, 8768, 9136, 9776, 10208,
+            72,
+            128,
+            208,
+            288,
+            368,
+            480,
+            528,
+            688,
+            800,
+            976,
+            1120,
+            1264,
+            1440,
+            1576,
+            1784,
+            2024,
+            2264,
+            2504,
+            2728,
+            3080,
+            3248,
+            3536,
+            3712,
+            4112,
+            4304,
+            4768,
+            5024,
+            5288,
+            5608,
+            5960,
+            6344,
+            6760,
+            7208,
+            7688,
+            7888,
+            8432,
+            8768,
+            9136,
+            9776,
+            10208,
 
-        104, 176, 272, 384, 496, 608, 704, 880, 1056, 1232,
-        1440, 1648, 1952, 2088, 2360, 2600, 2936, 3176, 3560, 3880,
-        4096, 4544, 4912, 5312, 5744, 6032, 6464, 6968, 7288, 7880,
-        8264, 8920, 9368, 9848, 10288, 10832, 11408, 12016, 12656, 13328,
+            104,
+            176,
+            272,
+            384,
+            496,
+            608,
+            704,
+            880,
+            1056,
+            1232,
+            1440,
+            1648,
+            1952,
+            2088,
+            2360,
+            2600,
+            2936,
+            3176,
+            3560,
+            3880,
+            4096,
+            4544,
+            4912,
+            5312,
+            5744,
+            6032,
+            6464,
+            6968,
+            7288,
+            7880,
+            8264,
+            8920,
+            9368,
+            9848,
+            10288,
+            10832,
+            11408,
+            12016,
+            12656,
+            13328,
         );
         if (!is_numeric($qrcode_version)) {
             $qrcode_version = 0;
         }
         if (!$qrcode_version) {
             /* #--- auto version select */
-            $i = 1 + 40 * $ec;
-            $j = $i + 39;
+            $i              = 1 + 40 * $ec;
+            $j              = $i + 39;
             $qrcode_version = 1;
             while ($i <= $j) {
                 if (($max_data_bits_array[$i]) >= $total_data_bits + $codeword_num_plus[$qrcode_version]) {
@@ -1048,34 +1405,114 @@ class QrCode
         $total_data_bits += $codeword_num_plus[$qrcode_version];
         $data_bits[$codeword_num_counter_value] += $codeword_num_plus[$qrcode_version];
 
-        $max_codewords_array = array(0, 26, 44, 70, 100, 134, 172, 196, 242,
-        292, 346, 404, 466, 532, 581, 655, 733, 815, 901, 991, 1085, 1156,
-        1258, 1364, 1474, 1588, 1706, 1828, 1921, 2051, 2185, 2323, 2465,
-        2611, 2761, 2876, 3034, 3196, 3362, 3532, 3706, );
+        $max_codewords_array = array(
+            0,
+            26,
+            44,
+            70,
+            100,
+            134,
+            172,
+            196,
+            242,
+            292,
+            346,
+            404,
+            466,
+            532,
+            581,
+            655,
+            733,
+            815,
+            901,
+            991,
+            1085,
+            1156,
+            1258,
+            1364,
+            1474,
+            1588,
+            1706,
+            1828,
+            1921,
+            2051,
+            2185,
+            2323,
+            2465,
+            2611,
+            2761,
+            2876,
+            3034,
+            3196,
+            3362,
+            3532,
+            3706,
+        );
 
-        $max_codewords = $max_codewords_array[$qrcode_version];
+        $max_codewords     = $max_codewords_array[$qrcode_version];
         $max_modules_1side = 17 + ($qrcode_version << 2);
 
-        $matrix_remain_bit = array(0, 0, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 3,
-        4, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0, );
+        $matrix_remain_bit = array(
+            0,
+            0,
+            7,
+            7,
+            7,
+            7,
+            7,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+        );
 
         /* ---- read version ECC data file */
 
-        $byte_num = $matrix_remain_bit[$qrcode_version] + ($max_codewords << 3);
-        $filename = $path.'/qrv'.$qrcode_version.'_'.$ec.'.dat';
-        $fp1 = fopen($filename, 'rb');
-        $matx = fread($fp1, $byte_num);
-        $maty = fread($fp1, $byte_num);
-        $masks = fread($fp1, $byte_num);
-        $fi_x = fread($fp1, 15);
-        $fi_y = fread($fp1, 15);
+        $byte_num         = $matrix_remain_bit[$qrcode_version] + ($max_codewords << 3);
+        $filename         = $path . '/qrv' . $qrcode_version . '_' . $ec . '.dat';
+        $fp1              = fopen($filename, 'rb');
+        $matx             = fread($fp1, $byte_num);
+        $maty             = fread($fp1, $byte_num);
+        $masks            = fread($fp1, $byte_num);
+        $fi_x             = fread($fp1, 15);
+        $fi_y             = fread($fp1, 15);
         $rs_ecc_codewords = ord(fread($fp1, 1));
-        $rso = fread($fp1, 128);
+        $rso              = fread($fp1, 128);
         fclose($fp1);
 
         $matrix_x_array = unpack('C*', $matx);
         $matrix_y_array = unpack('C*', $maty);
-        $mask_array = unpack('C*', $masks);
+        $mask_array     = unpack('C*', $masks);
 
         $rs_block_order = unpack('C*', $rso);
 
@@ -1087,9 +1524,9 @@ class QrCode
 
         $max_data_codewords = ($max_data_bits >> 3);
 
-        $filename = $path.'/rsc'.$rs_ecc_codewords.'.dat';
-        $fp0 = fopen($filename, 'rb');
-        $i = 0;
+        $filename           = $path . '/rsc' . $rs_ecc_codewords . '.dat';
+        $fp0                = fopen($filename, 'rb');
+        $i                  = 0;
         $rs_cal_table_array = array();
         while ($i < 256) {
             $rs_cal_table_array[$i] = fread($fp0, $rs_ecc_codewords);
@@ -1101,11 +1538,11 @@ class QrCode
 
         if ($total_data_bits <= $max_data_bits - 4) {
             $data_value[$data_counter] = 0;
-            $data_bits[$data_counter] = 4;
+            $data_bits[$data_counter]  = 4;
         } else {
             if ($total_data_bits < $max_data_bits) {
                 $data_value[$data_counter] = 0;
-                $data_bits[$data_counter] = $max_data_bits - $total_data_bits;
+                $data_bits[$data_counter]  = $max_data_bits - $total_data_bits;
             } else {
                 if ($total_data_bits > $max_data_bits) {
                     throw new \OverflowException('QRCode: overflow error');
@@ -1115,13 +1552,13 @@ class QrCode
 
         /* ----divide data by 8bit */
 
-        $i = 0;
+        $i                 = 0;
         $codewords_counter = 0;
-        $codewords[0] = 0;
-        $remaining_bits = 8;
+        $codewords[0]      = 0;
+        $remaining_bits    = 8;
 
         while ($i <= $data_counter) {
-            $buffer = @$data_value[$i];
+            $buffer      = @$data_value[$i];
             $buffer_bits = @$data_bits[$i];
 
             $flag = 1;
@@ -1138,7 +1575,7 @@ class QrCode
                         $flag = 0;
                     } else {
                         $buffer = ($buffer & ((1 << $buffer_bits) - 1));
-                        $flag = 1;
+                        $flag   = 1;
                     }
 
                     ++$codewords_counter;
@@ -1173,10 +1610,10 @@ class QrCode
 
         /* ---- RS-ECC prepare */
 
-        $i = 0;
-        $j = 0;
+        $i               = 0;
+        $j               = 0;
         $rs_block_number = 0;
-        $rs_temp[0] = '';
+        $rs_temp[0]      = '';
 
         while ($i < $max_data_codewords) {
             $rs_temp[$rs_block_number] .= chr($codewords[$i]);
@@ -1196,14 +1633,14 @@ class QrCode
         #
         */
 
-        $rs_block_number = 0;
+        $rs_block_number    = 0;
         $rs_block_order_num = count($rs_block_order);
 
         while ($rs_block_number < $rs_block_order_num) {
-            $rs_codewords = $rs_block_order[$rs_block_number + 1];
+            $rs_codewords      = $rs_block_order[$rs_block_number + 1];
             $rs_data_codewords = $rs_codewords - $rs_ecc_codewords;
 
-            $rstemp = $rs_temp[$rs_block_number].str_repeat(chr(0), $rs_ecc_codewords);
+            $rstemp       = $rs_temp[$rs_block_number] . str_repeat(chr(0), $rs_ecc_codewords);
             $padding_data = str_repeat(chr(0), $rs_data_codewords);
 
             $j = $rs_data_codewords;
@@ -1212,8 +1649,8 @@ class QrCode
 
                 if ($first) {
                     $left_chr = substr($rstemp, 1);
-                    $cal = $rs_cal_table_array[$first].$padding_data;
-                    $rstemp = $left_chr ^ $cal;
+                    $cal      = $rs_cal_table_array[$first] . $padding_data;
+                    $rstemp   = $left_chr ^ $cal;
                 } else {
                     $rstemp = substr($rstemp, 1);
                 }
@@ -1228,7 +1665,7 @@ class QrCode
 
         /* ---- flash matrix */
         $matrix_content = array();
-        $i = 0;
+        $i              = 0;
         while ($i < $max_modules_1side) {
             $j = 0;
             while ($j < $max_modules_1side) {
@@ -1243,11 +1680,11 @@ class QrCode
         $i = 0;
         while ($i < $max_codewords) {
             $codeword_i = $codewords[$i];
-            $j = 8;
+            $j          = 8;
             while ($j >= 1) {
-                $codeword_bits_number = ($i << 3) +  $j;
-                $matrix_content[ $matrix_x_array[$codeword_bits_number] ][ $matrix_y_array[$codeword_bits_number] ] = ((255 * ($codeword_i & 1)) ^ $mask_array[$codeword_bits_number]);
-                $codeword_i = $codeword_i >> 1;
+                $codeword_bits_number                                                                           = ($i << 3) + $j;
+                $matrix_content[$matrix_x_array[$codeword_bits_number]][$matrix_y_array[$codeword_bits_number]] = ((255 * ($codeword_i & 1)) ^ $mask_array[$codeword_bits_number]);
+                $codeword_i                                                                                     = $codeword_i >> 1;
                 --$j;
             }
             ++$i;
@@ -1255,57 +1692,57 @@ class QrCode
 
         $matrix_remain = $matrix_remain_bit[$qrcode_version];
         while ($matrix_remain) {
-            $remain_bit_temp = $matrix_remain + ($max_codewords << 3);
-            $matrix_content[ $matrix_x_array[$remain_bit_temp] ][ $matrix_y_array[$remain_bit_temp] ] = (255 ^ $mask_array[$remain_bit_temp]);
+            $remain_bit_temp                                                                      = $matrix_remain + ($max_codewords << 3);
+            $matrix_content[$matrix_x_array[$remain_bit_temp]][$matrix_y_array[$remain_bit_temp]] = (255 ^ $mask_array[$remain_bit_temp]);
             --$matrix_remain;
         }
 
         #--- mask select
 
         $min_demerit_score = 0;
-        $hor_master = '';
-        $ver_master = '';
-        $k = 0;
+        $hor_master        = '';
+        $ver_master        = '';
+        $k                 = 0;
         while ($k < $max_modules_1side) {
             $l = 0;
             while ($l < $max_modules_1side) {
-                $hor_master = $hor_master.chr($matrix_content[$l][$k]);
-                $ver_master = $ver_master.chr($matrix_content[$k][$l]);
+                $hor_master = $hor_master . chr($matrix_content[$l][$k]);
+                $ver_master = $ver_master . chr($matrix_content[$k][$l]);
                 ++$l;
             }
             ++$k;
         }
-        $i = 0;
-        $all_matrix = $max_modules_1side * $max_modules_1side;
+        $i           = 0;
+        $all_matrix  = $max_modules_1side * $max_modules_1side;
         $mask_number = 0;
         while ($i < 8) {
             $demerit_n1 = 0;
-            $ptn_temp = array();
-            $bit = 1 << $i;
-            $bit_r = (~$bit) & 255;
-            $bit_mask = str_repeat(chr($bit), $all_matrix);
-            $hor = $hor_master & $bit_mask;
-            $ver = $ver_master & $bit_mask;
+            $ptn_temp   = array();
+            $bit        = 1 << $i;
+            $bit_r      = (~$bit) & 255;
+            $bit_mask   = str_repeat(chr($bit), $all_matrix);
+            $hor        = $hor_master & $bit_mask;
+            $ver        = $ver_master & $bit_mask;
 
-            $ver_shift1 = $ver.str_repeat(chr(170), $max_modules_1side);
-            $ver_shift2 = str_repeat(chr(170), $max_modules_1side).$ver;
-            $ver_shift1_0 = $ver.str_repeat(chr(0), $max_modules_1side);
-            $ver_shift2_0 = str_repeat(chr(0), $max_modules_1side).$ver;
-            $ver_or = chunk_split(~($ver_shift1 | $ver_shift2), $max_modules_1side, chr(170));
-            $ver_and = chunk_split(~($ver_shift1_0 & $ver_shift2_0), $max_modules_1side, chr(170));
+            $ver_shift1   = $ver . str_repeat(chr(170), $max_modules_1side);
+            $ver_shift2   = str_repeat(chr(170), $max_modules_1side) . $ver;
+            $ver_shift1_0 = $ver . str_repeat(chr(0), $max_modules_1side);
+            $ver_shift2_0 = str_repeat(chr(0), $max_modules_1side) . $ver;
+            $ver_or       = chunk_split(~($ver_shift1 | $ver_shift2), $max_modules_1side, chr(170));
+            $ver_and      = chunk_split(~($ver_shift1_0 & $ver_shift2_0), $max_modules_1side, chr(170));
 
             $hor = chunk_split(~$hor, $max_modules_1side, chr(170));
             $ver = chunk_split(~$ver, $max_modules_1side, chr(170));
-            $hor = $hor.chr(170).$ver;
+            $hor = $hor . chr(170) . $ver;
 
-            $n1_search = '/'.str_repeat(chr(255), 5).'+|'.str_repeat(chr($bit_r), 5).'+/';
-            $n3_search = chr($bit_r).chr(255).chr($bit_r).chr($bit_r).chr($bit_r).chr(255).chr($bit_r);
+            $n1_search = '/' . str_repeat(chr(255), 5) . '+|' . str_repeat(chr($bit_r), 5) . '+/';
+            $n3_search = chr($bit_r) . chr(255) . chr($bit_r) . chr($bit_r) . chr($bit_r) . chr(255) . chr($bit_r);
 
             $demerit_n3 = substr_count($hor, $n3_search) * 40;
             $demerit_n4 = floor(abs(((100 * (substr_count($ver, chr($bit_r)) / ($byte_num))) - 50) / 5)) * 10;
 
-            $n2_search1 = '/'.chr($bit_r).chr($bit_r).'+/';
-            $n2_search2 = '/'.chr(255).chr(255).'+/';
+            $n2_search1 = '/' . chr($bit_r) . chr($bit_r) . '+/';
+            $n2_search2 = '/' . chr(255) . chr(255) . '+/';
             $demerit_n2 = 0;
             preg_match_all($n2_search1, $ver_and, $ptn_temp);
             foreach ($ptn_temp[0] as $str_temp) {
@@ -1328,7 +1765,7 @@ class QrCode
             $demerit_score = $demerit_n1 + $demerit_n2 + $demerit_n3 + $demerit_n4;
 
             if ($demerit_score <= $min_demerit_score || $i == 0) {
-                $mask_number = $i;
+                $mask_number       = $i;
                 $min_demerit_score = $demerit_score;
             }
 
@@ -1340,20 +1777,45 @@ class QrCode
         # --- format information
 
         $format_information_value = (($ec << 3) | $mask_number);
-        $format_information_array = array('101010000010010', '101000100100101',
-        '101111001111100', '101101101001011', '100010111111001', '100000011001110',
-        '100111110010111', '100101010100000', '111011111000100', '111001011110011',
-        '111110110101010', '111100010011101', '110011000101111', '110001100011000',
-        '110110001000001', '110100101110110', '001011010001001', '001001110111110',
-        '001110011100111', '001100111010000', '000011101100010', '000001001010101',
-        '000110100001100', '000100000111011', '011010101011111', '011000001101000',
-        '011111100110001', '011101000000110', '010010010110100', '010000110000011',
-        '010111011011010', '010101111101101', );
-        $i = 0;
+        $format_information_array = array(
+            '101010000010010',
+            '101000100100101',
+            '101111001111100',
+            '101101101001011',
+            '100010111111001',
+            '100000011001110',
+            '100111110010111',
+            '100101010100000',
+            '111011111000100',
+            '111001011110011',
+            '111110110101010',
+            '111100010011101',
+            '110011000101111',
+            '110001100011000',
+            '110110001000001',
+            '110100101110110',
+            '001011010001001',
+            '001001110111110',
+            '001110011100111',
+            '001100111010000',
+            '000011101100010',
+            '000001001010101',
+            '000110100001100',
+            '000100000111011',
+            '011010101011111',
+            '011000001101000',
+            '011111100110001',
+            '011101000000110',
+            '010010010110100',
+            '010000110000011',
+            '010111011011010',
+            '010101111101101',
+        );
+        $i                        = 0;
         while ($i < 15) {
             $content = substr($format_information_array[$format_information_value], $i, 1);
 
-            $matrix_content[$format_information_x1[$i]][$format_information_y1[$i]] = $content * 255;
+            $matrix_content[$format_information_x1[$i]][$format_information_y1[$i]]         = $content * 255;
             $matrix_content[$format_information_x2[$i + 1]][$format_information_y2[$i + 1]] = $content * 255;
             ++$i;
         }
@@ -1367,15 +1829,15 @@ class QrCode
             }
         }
 
-        $image_width = $this->size + $this->padding * 2;
+        $image_width  = $this->size + $this->padding * 2;
         $image_height = $this->size + $this->padding * 2;
 
         if (!empty($this->label)) {
             if (!function_exists('imagettfbbox')) {
                 throw new Exception('QRCode: missing function "imagettfbbox". Did you install the FreeType library?');
             }
-            $font_box = imagettfbbox($this->label_font_size, 0, $this->label_font_path, $this->label);
-            $label_width = (int) $font_box[2] - (int) $font_box[0];
+            $font_box     = imagettfbbox($this->label_font_size, 0, $this->label_font_path, $this->label);
+            $label_width  = (int) $font_box[2] - (int) $font_box[0];
             $label_height = (int) $font_box[0] - (int) $font_box[7];
 
             if ($this->label_valign == self::LABEL_VALIGN_MIDDLE) {
@@ -1388,10 +1850,10 @@ class QrCode
         $output_image = imagecreate($image_width, $image_height);
         imagecolorallocate($output_image, 255, 255, 255);
 
-        $image_path = $image_path.'/qrv'.$qrcode_version.'.png';
+        $image_path = $image_path . '/qrv' . $qrcode_version . '.png';
 
-        $base_image = imagecreatefrompng($image_path);
-        $code_size = $this->size;
+        $base_image  = imagecreatefrompng($image_path);
+        $code_size   = $this->size;
         $module_size = function ($size = 1) use ($code_size, $base_image) {
             return round($code_size / imagesx($base_image) * $size);
         };
@@ -1399,11 +1861,11 @@ class QrCode
         $col[1] = imagecolorallocate($base_image, 0, 0, 0);
         $col[0] = imagecolorallocate($base_image, 255, 255, 255);
 
-        $i = 4;
+        $i   = 4;
         $mxe = 4 + $max_modules_1side;
-        $ii = 0;
+        $ii  = 0;
         while ($i < $mxe) {
-            $j = 4;
+            $j  = 4;
             $jj = 0;
             while ($j < $mxe) {
                 if ($matrix_content[$ii][$jj] & $mask_content) {
@@ -1423,9 +1885,9 @@ class QrCode
         }
 
         if ($this->draw_border == true) {
-            $border_width = $this->padding;
+            $border_width  = $this->padding;
             $border_height = $this->size + $this->padding - 1;
-            $border_color = imagecolorallocate($output_image, 0, 0, 0);
+            $border_color  = imagecolorallocate($output_image, 0, 0, 0);
             imagerectangle($output_image, $border_width, $border_width, $border_height, $border_height, $border_color);
         }
 
@@ -1487,7 +1949,7 @@ class QrCode
             $label_bg_x2 = $font_x + $label_width + $module_size(2);
             $label_bg_y2 = $font_y;
 
-            $color = imagecolorallocate($output_image, 0, 0, 0);
+            $color          = imagecolorallocate($output_image, 0, 0, 0);
             $label_bg_color = imagecolorallocate($output_image, 255, 255, 255);
 
             imagefilledrectangle($output_image, $label_bg_x1, $label_bg_y1, $label_bg_x2, $label_bg_y2, $label_bg_color);
@@ -1495,12 +1957,13 @@ class QrCode
         }
 
         $imagecolorset_function = new ReflectionFunction('imagecolorset');
-        $allow_alpha = $imagecolorset_function->getNumberOfParameters() == 6;
+        $allow_alpha            = $imagecolorset_function->getNumberOfParameters() == 6;
 
         if ($this->color_background != null) {
             $index = imagecolorclosest($output_image, 255, 255, 255);
             if ($allow_alpha) {
-                imagecolorset($output_image, $index, $this->color_background['r'], $this->color_background['g'], $this->color_background['b'], $this->color_background['a']);
+                imagecolorset($output_image, $index, $this->color_background['r'], $this->color_background['g'], $this->color_background['b'],
+                    $this->color_background['a']);
             } else {
                 imagecolorset($output_image, $index, $this->color_background['r'], $this->color_background['g'], $this->color_background['b']);
             }
@@ -1509,12 +1972,13 @@ class QrCode
         if ($this->color_foreground != null) {
             $index = imagecolorclosest($output_image, 0, 0, 0);
             if ($allow_alpha) {
-                imagecolorset($output_image, $index, $this->color_foreground['r'], $this->color_foreground['g'], $this->color_foreground['b'], $this->color_foreground['a']);
+                imagecolorset($output_image, $index, $this->color_foreground['r'], $this->color_foreground['g'], $this->color_foreground['b'],
+                    $this->color_foreground['a']);
             } else {
                 imagecolorset($output_image, $index, $this->color_foreground['r'], $this->color_foreground['g'], $this->color_foreground['b']);
             }
         }
-        
+
         $this->image = $output_image;
     }
 }

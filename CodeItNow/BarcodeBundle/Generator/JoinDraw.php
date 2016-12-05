@@ -10,17 +10,18 @@
 namespace CodeItNow\BarcodeBundle\Generator;
 
 
-class JoinDraw {
-    const ALIGN_RIGHT       = 0;
-    const ALIGN_BOTTOM      = 0;
-    const ALIGN_LEFT        = 1;
-    const ALIGN_TOP         = 1;
-    const ALIGN_CENTER      = 2;
+class JoinDraw
+{
+    const ALIGN_RIGHT = 0;
+    const ALIGN_BOTTOM = 0;
+    const ALIGN_LEFT = 1;
+    const ALIGN_TOP = 1;
+    const ALIGN_CENTER = 2;
 
-    const POSITION_RIGHT    = 0;
-    const POSITION_BOTTOM   = 1;
-    const POSITION_LEFT     = 2;
-    const POSITION_TOP      = 3;
+    const POSITION_RIGHT = 0;
+    const POSITION_BOTTOM = 1;
+    const POSITION_LEFT = 2;
+    const POSITION_TOP = 3;
 
     private $image1;
     private $image2;
@@ -28,6 +29,7 @@ class JoinDraw {
     private $position;
     private $space;
     private $im;
+
 
     /**
      * Construct the JoinDrawing Object.
@@ -37,14 +39,15 @@ class JoinDraw {
      *  - $alignment is the alignment of the $image2 if this one is smaller than $image1;
      *    if $image2 is bigger than $image1, the $image1 will be positionned on the opposite side specified.
      *
-     * @param mixed $image1
-     * @param mixed $image2
+     * @param mixed    $image1
+     * @param mixed    $image2
      * @param CINColor $background
-     * @param int $space
-     * @param int $position
-     * @param int $alignment
+     * @param int      $space
+     * @param int      $position
+     * @param int      $alignment
      */
-    public function __construct($image1, $image2, $background, $space = 10, $position = self::POSITION_RIGHT, $alignment = self::ALIGN_TOP) {
+    public function __construct($image1, $image2, $background, $space = 10, $position = self::POSITION_RIGHT, $alignment = self::ALIGN_TOP)
+    {
         if ($image1 instanceof CINDrawing) {
             $this->image1 = $image1->get_im();
         } else {
@@ -57,19 +60,22 @@ class JoinDraw {
         }
 
         $this->background = $background;
-        $this->space = (int)$space;
-        $this->position = (int)$position;
-        $this->alignment = (int)$alignment;
+        $this->space      = (int) $space;
+        $this->position   = (int) $position;
+        $this->alignment  = (int) $alignment;
 
         $this->createIm();
     }
 
+
     /**
      * Destroys the image.
      */
-    public function __destruct() {
+    public function __destruct()
+    {
         imagedestroy($this->im);
     }
+
 
     /**
      * Finds the position where the barcode should be aligned.
@@ -77,9 +83,11 @@ class JoinDraw {
      * @param int $size1
      * @param int $size2
      * @param int $alignment
+     *
      * @return int
      */
-    private function findPosition($size1, $size2, $alignment) {
+    private function findPosition($size1, $size2, $alignment)
+    {
         $rsize1 = max($size1, $size2);
         $rsize2 = min($size1, $size2);
 
@@ -92,13 +100,16 @@ class JoinDraw {
         }
     }
 
+
     /**
      * Change the alignments.
      *
      * @param int $alignment
+     *
      * @return int
      */
-    private function changeAlignment($alignment) {
+    private function changeAlignment($alignment)
+    {
         if ($alignment === 0) {
             return 1;
         } elseif ($alignment === 1) {
@@ -108,10 +119,12 @@ class JoinDraw {
         }
     }
 
+
     /**
      * Creates the image.
      */
-    private function createIm() {
+    private function createIm()
+    {
         $w1 = imagesx($this->image1);
         $w2 = imagesx($this->image2);
         $h1 = imagesy($this->image1);
@@ -134,7 +147,7 @@ class JoinDraw {
                 $posX1 = 0;
                 $posX2 = $this->findPosition($w1, $w2, $this->alignment);
             } else {
-                $a = $this->changeAlignment($this->alignment);
+                $a     = $this->changeAlignment($this->alignment);
                 $posX1 = $this->findPosition($w1, $w2, $a);
                 $posX2 = 0;
             }
@@ -146,7 +159,7 @@ class JoinDraw {
                 $posY1 = 0;
                 $posY2 = $this->findPosition($h1, $h2, $this->alignment);
             } else {
-                $a = $this->changeAlignment($this->alignment);
+                $a     = $this->changeAlignment($this->alignment);
                 $posY2 = 0;
                 $posY1 = $this->findPosition($h1, $h2, $a);
             }
@@ -158,7 +171,7 @@ class JoinDraw {
                 $posX2 = $this->findPosition($w1, $w2, $this->alignment);
                 $posX1 = 0;
             } else {
-                $a = $this->changeAlignment($this->alignment);
+                $a     = $this->changeAlignment($this->alignment);
                 $posX2 = 0;
                 $posX1 = $this->findPosition($w1, $w2, $a);
             }
@@ -170,7 +183,7 @@ class JoinDraw {
                 $posY2 = $this->findPosition($h1, $h2, $this->alignment);
                 $posY1 = 0;
             } else {
-                $a = $this->changeAlignment($this->alignment);
+                $a     = $this->changeAlignment($this->alignment);
                 $posY2 = 0;
                 $posY1 = $this->findPosition($h1, $h2, $a);
             }
@@ -183,13 +196,16 @@ class JoinDraw {
         imagecopy($this->im, $this->image2, $posX2, $posY2, 0, 0, $w2, $h2);
     }
 
+
     /**
      * Returns the new $im created.
      *
      * @return resource
      */
-    public function get_im() {
+    public function get_im()
+    {
         return $this->im;
     }
 }
+
 ?>

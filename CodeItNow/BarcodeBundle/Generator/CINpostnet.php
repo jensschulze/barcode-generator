@@ -11,11 +11,13 @@
 namespace CodeItNow\BarcodeBundle\Generator;
 
 
-class CINpostnet extends CINBarcode1D {
+class CINpostnet extends CINBarcode1D
+{
     /**
      * Constructor.
      */
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
 
         $this->keys = array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9');
@@ -35,15 +37,17 @@ class CINpostnet extends CINBarcode1D {
         $this->setThickness(9);
     }
 
+
     /**
      * Draws the barcode.
      *
      * @param resource $im
      */
-    public function draw($im) {
+    public function draw($im)
+    {
         // Checksum
         $checksum = 0;
-        $c = strlen($this->text);
+        $c        = strlen($this->text);
         for ($i = 0; $i < $c; $i++) {
             $checksum += intval($this->text[$i]);
         }
@@ -66,32 +70,38 @@ class CINpostnet extends CINBarcode1D {
         $this->drawText($im, 0, 0, $this->positionX, $this->thickness);
     }
 
+
     /**
      * Returns the maximal size of a barcode.
      *
      * @param int $w
      * @param int $h
+     *
      * @return int[]
      */
-    public function getDimension($w, $h) {
-        $c = strlen($this->text);
-        $startlength = 3;
-        $textlength = $c * 5 * 3;
+    public function getDimension($w, $h)
+    {
+        $c              = strlen($this->text);
+        $startlength    = 3;
+        $textlength     = $c * 5 * 3;
         $checksumlength = 5 * 3;
-        $endlength = 3;
+        $endlength      = 3;
 
         // We remove the white on the right
         $removelength = -1.56;
 
         $w += $startlength + $textlength + $checksumlength + $endlength + $removelength;
         $h += $this->thickness;
+
         return parent::getDimension($w, $h);
     }
+
 
     /**
      * Validates the input.
      */
-    protected function validate() {
+    protected function validate()
+    {
         $c = strlen($this->text);
         if ($c === 0) {
             throw new CINParseException('postnet', 'No data has been entered.');
@@ -112,14 +122,16 @@ class CINpostnet extends CINBarcode1D {
         parent::validate();
     }
 
+
     /**
      * Overloaded method for drawing special barcode.
      *
      * @param resource $im
-     * @param string $code
-     * @param boolean $startBar
+     * @param string   $code
+     * @param boolean  $startBar
      */
-    protected function drawChar($im, $code, $startBar = true) {
+    protected function drawChar($im, $code, $startBar = true)
+    {
         $c = strlen($code);
         for ($i = 0; $i < $c; $i++) {
             if ($code[$i] === '0') {
@@ -133,4 +145,5 @@ class CINpostnet extends CINBarcode1D {
         }
     }
 }
+
 ?>
