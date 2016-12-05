@@ -229,7 +229,6 @@ class BarcodeGenerator extends BarcodeType {
      * @return string   Base64Encoded image
      */
     private function _render(){
-        $textColor = new CINColor($this->foregroundColor);
         $backgroudColor = new CINColor($this->backgroundColor);
         
         /* Here is the list of the arguments

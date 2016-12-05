@@ -259,6 +259,7 @@ abstract class CINBarcode {
      */
     public function addLabel(CINLabel $label) {
         $label->setBackgroundColor($this->colorBg);
+        $label->setForegroundColor($this->colorFg);
         $this->labels[] = $label;
     }
 
