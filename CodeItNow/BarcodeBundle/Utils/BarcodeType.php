@@ -1,6 +1,7 @@
 <?php
 namespace CodeItNow\BarcodeBundle\Utils;
 
+
 class BarcodeType {
     /**
      * Codabar

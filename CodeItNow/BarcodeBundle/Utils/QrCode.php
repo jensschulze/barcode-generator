@@ -7,6 +7,8 @@
  */
 
 namespace CodeItNow\BarcodeBundle\Utils;
+
+
 use Exception;
 use ReflectionFunction;
 
@@ -749,10 +751,11 @@ class QrCode
 
         return $this;
     }
-    
+
+
     /**
      * Generate base64 image
-     * @return type
+     * @return string
      */
     public function generate(){
         $image = $this->get();

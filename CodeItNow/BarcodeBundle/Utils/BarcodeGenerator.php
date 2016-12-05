@@ -5,7 +5,8 @@
  * @link http://www.codeitnow.in 
  */
 namespace CodeItNow\BarcodeBundle\Utils;
-use CodeItNow\BarcodeBundle\Utils\BarcodeType;
+
+
 use CodeItNow\BarcodeBundle\Generator\CINColor;
 use CodeItNow\BarcodeBundle\Generator\CINDrawing;
 use CodeItNow\BarcodeBundle\Generator\CINFontFile;
@@ -13,64 +14,64 @@ use CodeItNow\BarcodeBundle\Generator\CINFontFile;
 class BarcodeGenerator extends BarcodeType {
     
     /**
-     * Resolution
+     * @var int Resolution
      */
     private $scale;
     
     /**
-     * Thikness
+     * @var int Thickness
      */
     private $thickness;
     
     /**
-     * Text and barcode color
+     * @var string Text and barcode color
      */
     private $foregroundColor = '#000000';
     
     /**
-     * Background color
+     * @var string Background color
      */
     private $backgroundColor = '#FFFFFF';
     
     /**
-     * Font path for barcode
+     * @var string Font path for barcode
      */
     private $font;
 
     /**
-     * Font size for text
+     * @var int Font size for text
      */
     private $fontSize;
 
     /**
-     * Barcode type such as code128, code39 etc.
+     * @var string Barcode type such as code128, code39 etc.
      */
     private $barcodeType;
     
     /**
-     * Barcode format such as png, jpeg, gif or wbmp
+     * @var string Barcode format such as png, jpeg, gif or wbmp
      */
     private $format;
     
     /**
-     * Text to generate barcode
+     * @var string Text to generate barcode
      */
     private $text;
     
     /**
-     * Filename to save barcode
+     * @var string Filename to save barcode
      */
     private $filename = '';
     
     /**
-     * Barcode types are allowed to generate
+     * @var string[] Barcode types are allowed to generate
      */
     private $allowedFormats = array(
         'PNG', 'JPEG', 'GIF', 'WBMP'
     );
 
     /**
-     * Clear labels flag
+     * @var bool|string Clear labels flag
      */
     private $label = FALSE;
 
@@ -155,8 +156,11 @@ class BarcodeGenerator extends BarcodeType {
         $this->fontSize = $fontSize;
     }
 
+
     /**
      * Set label, leave empty for automatic label
+     *
+     * @param $label
      */
     public function setLabel($label)
     {
@@ -230,12 +234,12 @@ class BarcodeGenerator extends BarcodeType {
      */
     private function _render(){
         $textColor = new CINColor($this->foregroundColor);
-        $backgroudColor = new CINColor($this->backgroundColor);
+        $backgroundColor = new CINColor($this->backgroundColor);
         
         /* Here is the list of the arguments
         1 - Filename (empty : display on screen)
         2 - Background color */
-        $drawing = new CINDrawing($this->filename, $backgroudColor);
+        $drawing = new CINDrawing($this->filename, $backgroundColor);
         
         $drawException = null;
         
