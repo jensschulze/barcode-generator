@@ -5,15 +5,18 @@
  * Argument Exception
  *
  *--------------------------------------------------------------------
- * 
+ *
  * @author  Akhtar Khan <er.akhtarkhan@gmail.com>
  */
 
 namespace CodeItNow\BarcodeBundle\Generator;
+
 use Exception;
 
-class CINArgumentException extends Exception {
+class CINArgumentException extends Exception
+{
     protected $param;
+
 
     /**
      * Constructor with specific message for a parameter.
@@ -21,9 +24,11 @@ class CINArgumentException extends Exception {
      * @param string $message
      * @param string $param
      */
-    public function __construct($message, $param) {
+    public function __construct($message, $param)
+    {
         $this->param = $param;
         parent::__construct($message, 20000);
     }
 }
+
 ?>

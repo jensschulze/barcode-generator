@@ -7,17 +7,18 @@
  *--------------------------------------------------------------------
  */
 namespace CodeItNow\BarcodeBundle\Generator;
-use CodeItNow\BarcodeBundle\Generator\CINParseException;
-use CodeItNow\BarcodeBundle\Generator\CINArgumentException;
-use CodeItNow\BarcodeBundle\Generator\CINBarcode1D;
 
-class CINmsi extends CINBarcode1D {
+
+class CINmsi extends CINBarcode1D
+{
     private $checksum;
+
 
     /**
      * Constructor.
      */
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
 
         $this->keys = array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9');
@@ -37,12 +38,16 @@ class CINmsi extends CINBarcode1D {
         $this->setChecksum(0);
     }
 
+
     /**
      * Sets how many checksums we display. 0 to 2.
      *
      * @param int $checksum
+     *
+     * @throws CINArgumentException
      */
-    public function setChecksum($checksum) {
+    public function setChecksum($checksum)
+    {
         $checksum = intval($checksum);
         if ($checksum < 0 && $checksum > 2) {
             throw new CINArgumentException('The checksum must be between 0 and 2 included.', 'checksum');
@@ -51,12 +56,14 @@ class CINmsi extends CINBarcode1D {
         $this->checksum = $checksum;
     }
 
+
     /**
      * Draws the barcode.
      *
      * @param resource $im
      */
-    public function draw($im) {
+    public function draw($im)
+    {
         // Checksum
         $this->calculateChecksum();
 
@@ -79,28 +86,34 @@ class CINmsi extends CINBarcode1D {
         $this->drawText($im, 0, 0, $this->positionX, $this->thickness);
     }
 
+
     /**
      * Returns the maximal size of a barcode.
      *
      * @param int $w
      * @param int $h
+     *
      * @return int[]
      */
-    public function getDimension($w, $h) {
-        $textlength = 12 * strlen($this->text);
-        $startlength = 3;
+    public function getDimension($w, $h)
+    {
+        $textlength     = 12 * strlen($this->text);
+        $startlength    = 3;
         $checksumlength = $this->checksum * 12;
-        $endlength = 4;
+        $endlength      = 4;
 
         $w += $startlength + $textlength + $checksumlength + $endlength;
         $h += $this->thickness;
+
         return parent::getDimension($w, $h);
     }
+
 
     /**
      * Validates the input.
      */
-    protected function validate() {
+    protected function validate()
+    {
         $c = strlen($this->text);
         if ($c === 0) {
             throw new CINParseException('msi', 'No data has been entered.');
@@ -114,10 +127,12 @@ class CINmsi extends CINBarcode1D {
         }
     }
 
+
     /**
      * Overloaded method to calculate checksum.
      */
-    protected function calculateChecksum() {
+    protected function calculateChecksum()
+    {
         // Forming a new number
         // If the original number is even, we take all even position
         // If the original number is odd, we take all odd position
@@ -127,12 +142,12 @@ class CINmsi extends CINBarcode1D {
         // Add up all the digit in the result (270 : 2+7+0)
         // Add up other digit not used.
         // 10 - (? Modulo 10). If result = 10, change to 0
-        $last_text = $this->text;
+        $last_text           = $this->text;
         $this->checksumValue = array();
         for ($i = 0; $i < $this->checksum; $i++) {
-            $new_text = '';
+            $new_text   = '';
             $new_number = 0;
-            $c = strlen($last_text);
+            $c          = strlen($last_text);
             if ($c % 2 === 0) { // Even
                 $starting = 1;
             } else {
@@ -144,7 +159,7 @@ class CINmsi extends CINBarcode1D {
             }
 
             $new_text = strval(intval($new_text) * 2);
-            $c2 = strlen($new_text);
+            $c2       = strlen($new_text);
             for ($j = 0; $j < $c2; $j++) {
                 $new_number += intval($new_text[$j]);
             }
@@ -153,23 +168,25 @@ class CINmsi extends CINBarcode1D {
                 $new_number += intval($last_text[$j]);
             }
 
-            $new_number = (10 - $new_number % 10) % 10;
+            $new_number            = (10 - $new_number % 10) % 10;
             $this->checksumValue[] = $new_number;
             $last_text .= $new_number;
         }
     }
 
+
     /**
      * Overloaded method to display the checksum.
      */
-    protected function processChecksum() {
+    protected function processChecksum()
+    {
         if ($this->checksumValue === false) { // Calculate the checksum only once
             $this->calculateChecksum();
         }
 
         if ($this->checksumValue !== false) {
             $ret = '';
-            $c = count($this->checksumValue);
+            $c   = count($this->checksumValue);
             for ($i = 0; $i < $c; $i++) {
                 $ret .= $this->keys[$this->checksumValue[$i]];
             }
@@ -180,4 +197,5 @@ class CINmsi extends CINBarcode1D {
         return false;
     }
 }
+
 ?>

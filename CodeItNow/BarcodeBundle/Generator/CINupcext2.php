@@ -12,17 +12,17 @@
  */
 namespace CodeItNow\BarcodeBundle\Generator;
 
-use CodeItNow\BarcodeBundle\Generator\CINParseException;
-use CodeItNow\BarcodeBundle\Generator\CINBarcode1D;
-use CodeItNow\BarcodeBundle\Generator\CINLabel;
 
-class CINupcext2 extends CINBarcode1D {
+class CINupcext2 extends CINBarcode1D
+{
     protected $codeParity = array();
+
 
     /**
      * Constructor.
      */
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
 
         $this->keys = array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9');
@@ -48,12 +48,14 @@ class CINupcext2 extends CINBarcode1D {
         );
     }
 
+
     /**
      * Draws the barcode.
      *
      * @param resource $im
      */
-    public function draw($im) {
+    public function draw($im)
+    {
         // Starting Code
         $this->drawChar($im, '001', true);
 
@@ -68,27 +70,33 @@ class CINupcext2 extends CINBarcode1D {
         $this->drawText($im, 0, 0, $this->positionX, $this->thickness);
     }
 
+
     /**
      * Returns the maximal size of a barcode.
      *
      * @param int $w
      * @param int $h
+     *
      * @return int[]
      */
-    public function getDimension($w, $h) {
-        $startlength = 4;
-        $textlength = 2 * 7;
+    public function getDimension($w, $h)
+    {
+        $startlength     = 4;
+        $textlength      = 2 * 7;
         $intercharlength = 2;
 
         $w += $startlength + $textlength + $intercharlength;
         $h += $this->thickness;
+
         return parent::getDimension($w, $h);
     }
+
 
     /**
      * Adds the default label.
      */
-    protected function addDefaultLabel() {
+    protected function addDefaultLabel()
+    {
         parent::addDefaultLabel();
 
         if ($this->defaultLabel !== null) {
@@ -96,10 +104,12 @@ class CINupcext2 extends CINBarcode1D {
         }
     }
 
+
     /**
      * Validates the input.
      */
-    protected function validate() {
+    protected function validate()
+    {
         $c = strlen($this->text);
         if ($c === 0) {
             throw new CINParseException('upcext2', 'No data has been entered.');
@@ -120,14 +130,17 @@ class CINupcext2 extends CINBarcode1D {
         parent::validate();
     }
 
+
     /**
      * Inverses the string when the $inverse parameter is equal to 1.
      *
      * @param string $text
-     * @param int $inverse
+     * @param int    $inverse
+     *
      * @return string
      */
-    private static function inverse($text, $inverse = 1) {
+    private static function inverse($text, $inverse = 1)
+    {
         if ($inverse === 1) {
             $text = strrev($text);
         }
@@ -135,4 +148,5 @@ class CINupcext2 extends CINBarcode1D {
         return $text;
     }
 }
+
 ?>

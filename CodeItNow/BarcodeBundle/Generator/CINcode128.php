@@ -14,13 +14,13 @@
  *--------------------------------------------------------------------
  */
 namespace CodeItNow\BarcodeBundle\Generator;
-use CodeItNow\BarcodeBundle\Generator\CINParseException;
-use CodeItNow\BarcodeBundle\Generator\CINBarcode1D;
 
-define('CODE128_A',    1);            // Table A
-define('CODE128_B',    2);            // Table B
-define('CODE128_C',    3);            // Table C
-class CINcode128 extends CINBarcode1D {
+
+define('CODE128_A', 1);            // Table A
+define('CODE128_B', 2);            // Table B
+define('CODE128_C', 3);            // Table C
+class CINcode128 extends CINBarcode1D
+{
     const KEYA_FNC3 = 96;
     const KEYA_FNC2 = 97;
     const KEYA_SHIFT = 98;
@@ -56,14 +56,16 @@ class CINcode128 extends CINBarcode1D {
     private $latch;
     private $fnc;
 
-    private $METHOD            = null; // Array of method available to create Code128 (CODE128_A, CODE128_B, CODE128_C)
+    private $METHOD = null; // Array of method available to create Code128 (CODE128_A, CODE128_B, CODE128_C)
+
 
     /**
      * Constructor.
      *
-     * @param char $start
+     * @param string $start
      */
-    public function __construct($start = null) {
+    public function __construct($start = null)
+    {
         parent::__construct();
 
         /* CODE 128 A */
@@ -192,23 +194,24 @@ class CINcode128 extends CINBarcode1D {
 
         // Latches and Shifts
         $this->latch = array(
-            array(null,             self::KEYA_CODEB,   self::KEYA_CODEC),
-            array(self::KEYB_CODEA, null,               self::KEYB_CODEC),
-            array(self::KEYC_CODEA, self::KEYC_CODEB,   null)
+            array(null, self::KEYA_CODEB, self::KEYA_CODEC),
+            array(self::KEYB_CODEA, null, self::KEYB_CODEC),
+            array(self::KEYC_CODEA, self::KEYC_CODEB, null)
         );
         $this->shift = array(
-            array(null,             self::KEYA_SHIFT),
+            array(null, self::KEYA_SHIFT),
             array(self::KEYB_SHIFT, null)
         );
-        $this->fnc = array(
-            array(self::KEYA_FNC1,  self::KEYA_FNC2,    self::KEYA_FNC3,    self::KEYA_FNC4),
-            array(self::KEYB_FNC1,  self::KEYB_FNC2,    self::KEYB_FNC3,    self::KEYB_FNC4),
-            array(self::KEYC_FNC1,  null,               null,               null)
+        $this->fnc   = array(
+            array(self::KEYA_FNC1, self::KEYA_FNC2, self::KEYA_FNC3, self::KEYA_FNC4),
+            array(self::KEYB_FNC1, self::KEYB_FNC2, self::KEYB_FNC3, self::KEYB_FNC4),
+            array(self::KEYC_FNC1, null, null, null)
         );
 
         // Method available
-        $this->METHOD        = array(CODE128_A => 'A', CODE128_B => 'B', CODE128_C => 'C');
+        $this->METHOD = array(CODE128_A => 'A', CODE128_B => 'B', CODE128_C => 'C');
     }
+
 
     /**
      * Specifies the start code. Can be 'A', 'B', 'C', or null
@@ -220,8 +223,11 @@ class CINcode128 extends CINBarcode1D {
      * The default is null.
      *
      * @param string $table
+     *
+     * @throws CINArgumentException
      */
-    public function setStart($table) {
+    public function setStart($table)
+    {
         if ($table !== 'A' && $table !== 'B' && $table !== 'C' && $table !== null) {
             throw new CINArgumentException('The starting table must be A, B, C or null.', 'table');
         }
@@ -229,14 +235,17 @@ class CINcode128 extends CINBarcode1D {
         $this->starting_text = $table;
     }
 
+
     /**
      * Gets the tilde.
      *
      * @return bool
      */
-    public function getTilde() {
+    public function getTilde()
+    {
         return $this->tilde;
     }
+
 
     /**
      * Accepts tilde to be process as a special character.
@@ -246,26 +255,29 @@ class CINcode128 extends CINBarcode1D {
      *
      * @param boolean $accept
      */
-    public function setTilde($accept) {
-        $this->tilde = (bool)$accept;
+    public function setTilde($accept)
+    {
+        $this->tilde = (bool) $accept;
     }
+
 
     /**
      * Parses the text before displaying it.
      *
      * @param mixed $text
      */
-    public function parse($text) {
+    public function parse($text)
+    {
         $this->setStartFromText($text);
 
         $this->text = '';
-        $seq = '';
+        $seq        = '';
 
         $currentMode = $this->starting_text;
 
         // Here, we format correctly what the user gives.
         if (!is_array($text)) {
-            $seq = $this->getSequence($text, $currentMode);
+            $seq        = $this->getSequence($text, $currentMode);
             $this->text = $text;
         } else {
             // This loop checks for UnknownText AND raises an exception if a character is not allowed in a table
@@ -300,12 +312,14 @@ class CINcode128 extends CINBarcode1D {
         $this->addDefaultLabel();
     }
 
+
     /**
      * Draws the barcode.
      *
      * @param resource $im
      */
-    public function draw($im) {
+    public function draw($im)
+    {
         $c = count($this->data);
         for ($i = 0; $i < $c; $i++) {
             $this->drawChar($im, $this->data[$i], true);
@@ -315,27 +329,33 @@ class CINcode128 extends CINBarcode1D {
         $this->drawText($im, 0, 0, $this->positionX, $this->thickness);
     }
 
+
     /**
      * Returns the maximal size of a barcode.
      *
      * @param int $w
      * @param int $h
+     *
      * @return int[]
      */
-    public function getDimension($w, $h) {
+    public function getDimension($w, $h)
+    {
         // Contains start + text + checksum + stop
         $textlength = count($this->data) * 11;
-        $endlength = 2; // + final bar
+        $endlength  = 2; // + final bar
 
         $w += $textlength + $endlength;
         $h += $this->thickness;
+
         return parent::getDimension($w, $h);
     }
+
 
     /**
      * Validates the input.
      */
-    protected function validate() {
+    protected function validate()
+    {
         $c = count($this->data);
         if ($c === 0) {
             throw new CINParseException('code128', 'No data has been entered.');
@@ -344,10 +364,12 @@ class CINcode128 extends CINBarcode1D {
         parent::validate();
     }
 
+
     /**
      * Overloaded method to calculate checksum.
      */
-    protected function calculateChecksum() {
+    protected function calculateChecksum()
+    {
         // Checksum
         // First Char (START)
         // + Starting with the first data character following the start character,
@@ -355,7 +377,7 @@ class CINcode128 extends CINBarcode1D {
         // it by its character position (1) and add that to the running checksum.
         // Modulated 103
         $this->checksumValue = $this->indcheck[0];
-        $c = count($this->indcheck);
+        $c                   = count($this->indcheck);
         for ($i = 1; $i < $c; $i++) {
             $this->checksumValue += $this->indcheck[$i] * $i;
         }
@@ -363,17 +385,19 @@ class CINcode128 extends CINBarcode1D {
         $this->checksumValue = $this->checksumValue % 103;
     }
 
+
     /**
      * Overloaded method to display the checksum.
      */
-    protected function processChecksum() {
+    protected function processChecksum()
+    {
         if ($this->checksumValue === false) { // Calculate the checksum only once
             $this->calculateChecksum();
         }
 
         if ($this->checksumValue !== false) {
             if ($this->lastTable === 'C') {
-                return (string)$this->checksumValue;
+                return (string) $this->checksumValue;
             }
 
             return $this->{'keys' . $this->lastTable}[$this->checksumValue];
@@ -382,18 +406,21 @@ class CINcode128 extends CINBarcode1D {
         return false;
     }
 
+
     /**
      * Specifies the starting_text table if none has been specified earlier.
      *
      * @param string $text
      */
-    private function setStartFromText($text) {
+    private function setStartFromText($text)
+    {
         if ($this->starting_text === null) {
             // If we have a forced table at the start, we get that one...
             if (is_array($text)) {
                 if (is_array($text[0])) {
                     // Code like array(array(ENCODING, ''))
                     $this->starting_text = $this->METHOD[$text[0][0]];
+
                     return;
                 } else {
                     if (is_string($text[0])) {
@@ -402,6 +429,7 @@ class CINcode128 extends CINBarcode1D {
                     } else {
                         // Code like array(ENCODING, '')
                         $this->starting_text = $this->METHOD[$text[0]];
+
                         return;
                     }
                 }
@@ -409,7 +437,7 @@ class CINcode128 extends CINBarcode1D {
 
             // At this point, we had an "automatic" table selection...
             // If we can get at least 4 numbers, go in C; otherwise go in B.
-            $tmp = preg_quote($this->keysC, '/');
+            $tmp    = preg_quote($this->keysC, '/');
             $length = strlen($text);
             if ($length >= 4 && preg_match('/[' . $tmp . ']/', substr($text, 0, 4))) {
                 $this->starting_text = 'C';
@@ -423,15 +451,19 @@ class CINcode128 extends CINBarcode1D {
         }
     }
 
+
     /**
      * Extracts the ~ value from the $text at the $pos.
      * If the tilde is not ~~, ~F1, ~F2, ~F3, ~F4; an error is raised.
      *
      * @param string $text
-     * @param int $pos
+     * @param int    $pos
+     *
      * @return string
+     * @throws CINParseException
      */
-    private static function extractTilde($text, $pos) {
+    private static function extractTilde($text, $pos)
+    {
         if ($text[$pos] === '~') {
             if (isset($text[$pos + 1])) {
                 // Do we have a tilde?
@@ -460,17 +492,21 @@ class CINcode128 extends CINBarcode1D {
         }
     }
 
+
     /**
      * Gets the "dotted" sequence for the $text based on the $currentMode.
      * There is also a check if we use the special tilde ~
      *
      * @param string $text
      * @param string $currentMode
+     *
      * @return string
+     * @throws CINParseException
      */
-    private function getSequenceParsed($text, $currentMode) {
+    private function getSequenceParsed($text, $currentMode)
+    {
         if ($this->tilde) {
-            $sequence = '';
+            $sequence    = '';
             $previousPos = 0;
             while (($pos = strpos($text, '~', $previousPos)) !== false) {
                 $tildeData = self::extractTilde($text, $pos);
@@ -515,14 +551,18 @@ class CINcode128 extends CINBarcode1D {
         }
     }
 
+
     /**
      * Parses the text and returns the appropriate sequence for the Table A.
      *
      * @param string $text
      * @param string $currentMode
+     *
      * @return string
+     * @throws CINParseException
      */
-    private function setParseA($text, &$currentMode) {
+    private function setParseA($text, &$currentMode)
+    {
         $tmp = preg_quote($this->keysA, '/');
 
         // If we accept the ~ for special character, we must allow it.
@@ -533,45 +573,54 @@ class CINcode128 extends CINBarcode1D {
         $match = array();
         if (preg_match('/[^' . $tmp . ']/', $text, $match) === 1) {
             // We found something not allowed
-            throw new CINParseException('code128', 'The text "' . $text . '" can\'t be parsed with the Table A. The character "' . $match[0] . '" is not allowed.');
+            throw new CINParseException('code128',
+                'The text "' . $text . '" can\'t be parsed with the Table A. The character "' . $match[0] . '" is not allowed.');
         } else {
-            $latch = ($currentMode === 'A') ? '' : '0';
+            $latch       = ($currentMode === 'A') ? '' : '0';
             $currentMode = 'A';
 
             return $latch . $this->getSequenceParsed($text, $currentMode);
         }
     }
 
+
     /**
      * Parses the text and returns the appropriate sequence for the Table B.
      *
      * @param string $text
      * @param string $currentMode
+     *
      * @return string
+     * @throws CINParseException
      */
-    private function setParseB($text, &$currentMode) {
+    private function setParseB($text, &$currentMode)
+    {
         $tmp = preg_quote($this->keysB, '/');
 
         $match = array();
         if (preg_match('/[^' . $tmp . ']/', $text, $match) === 1) {
             // We found something not allowed
-            throw new CINParseException('code128', 'The text "' . $text . '" can\'t be parsed with the Table B. The character "' . $match[0] . '" is not allowed.');
+            throw new CINParseException('code128',
+                'The text "' . $text . '" can\'t be parsed with the Table B. The character "' . $match[0] . '" is not allowed.');
         } else {
-            $latch = ($currentMode === 'B') ? '' : '1';
+            $latch       = ($currentMode === 'B') ? '' : '1';
             $currentMode = 'B';
 
             return $latch . $this->getSequenceParsed($text, $currentMode);
         }
     }
 
+
     /**
      * Parses the text and returns the appropriate sequence for the Table C.
      *
      * @param string $text
      * @param string $currentMode
+     *
      * @return string
      */
-    private function setParseC($text, &$currentMode) {
+    private function setParseC($text, &$currentMode)
+    {
         $tmp = preg_quote($this->keysC, '/');
 
         // If we accept the ~ for special character, we must allow it.
@@ -582,14 +631,16 @@ class CINcode128 extends CINBarcode1D {
         $match = array();
         if (preg_match('/[^' . $tmp . ']/', $text, $match) === 1) {
             // We found something not allowed
-            throw new CINParseException('code128', 'The text "' . $text . '" can\'t be parsed with the Table C. The character "' . $match[0] . '" is not allowed.');
+            throw new CINParseException('code128',
+                'The text "' . $text . '" can\'t be parsed with the Table C. The character "' . $match[0] . '" is not allowed.');
         } else {
-            $latch = ($currentMode === 'C') ? '' : '2';
+            $latch       = ($currentMode === 'C') ? '' : '2';
             $currentMode = 'C';
 
             return $latch . $this->getSequenceParsed($text, $currentMode);
         }
     }
+
 
     /**
      * Depending on the $text, it will return the correct
@@ -597,11 +648,14 @@ class CINcode128 extends CINBarcode1D {
      *
      * @param string $text
      * @param string $starting_text
+     *
      * @return string
+     * @throws CINParseException
      */
-    private function getSequence($text, &$starting_text) {
-        $e = 10000;
-        $latLen = array(
+    private function getSequence($text, &$starting_text)
+    {
+        $e       = 10000;
+        $latLen  = array(
             array(0, 1, 1),
             array(1, 0, 1),
             array(1, 1, 0)
@@ -616,16 +670,22 @@ class CINcode128 extends CINBarcode1D {
         $startA = $e;
         $startB = $e;
         $startC = $e;
-        if ($starting_text === 'A') { $startA = 0; }
-        if ($starting_text === 'B') { $startB = 0; }
-        if ($starting_text === 'C') { $startC = 0; }
+        if ($starting_text === 'A') {
+            $startA = 0;
+        }
+        if ($starting_text === 'B') {
+            $startB = 0;
+        }
+        if ($starting_text === 'C') {
+            $startC = 0;
+        }
 
         $curLen = array($startA, $startB, $startC);
         $curSeq = array(null, null, null);
 
         $nextNumber = false;
 
-        $x = 0;
+        $x    = 0;
         $xLen = strlen($text);
         for ($x = 0; $x < $xLen; $x++) {
             $input = $text[$x];
@@ -645,7 +705,7 @@ class CINcode128 extends CINBarcode1D {
             $nxtSeq = array();
 
             // 3.
-            $flag = false;
+            $flag     = false;
             $posArray = array();
 
             // Special case, we do have a tilde and we process them
@@ -657,7 +717,7 @@ class CINcode128 extends CINBarcode1D {
                     $posArray[] = 1;
                     $x++;
                 } elseif (substr($tildeData, 0, 2) === '~F') {
-                    $v = intval($tildeData[2]);
+                    $v          = intval($tildeData[2]);
                     $posArray[] = 0;
                     $posArray[] = 1;
                     if ($v === 1) {
@@ -694,7 +754,9 @@ class CINcode128 extends CINBarcode1D {
                 }
 
                 for ($j = 0; $j < 2; $j++) {
-                    if ($j === $posArray[$i]) { continue; }
+                    if ($j === $posArray[$i]) {
+                        continue;
+                    }
                     if (($curLen[$j] + $shftLen[$j][$posArray[$i]] + $charSiz[$posArray[$i]]) < $nxtLen[$j]) {
                         $nxtLen[$j] = $curLen[$j] + $shftLen[$j][$posArray[$i]] + $charSiz[$posArray[$i]];
                         $nxtSeq[$j] = $curSeq[$j] . chr($posArray[$i] + 65) . '.';
@@ -704,7 +766,7 @@ class CINcode128 extends CINBarcode1D {
 
             if ($c === 0) {
                 // We found an unsuported character
-                throw new CINParseException('code128', 'Character ' .  $input . ' not supported.');
+                throw new CINParseException('code128', 'Character ' . $input . ' not supported.');
             }
 
             if ($flag) {
@@ -741,6 +803,7 @@ class CINcode128 extends CINBarcode1D {
         return $curSeq[$k];
     }
 
+
     /**
      * Depending on the sequence $seq given (returned from getSequence()),
      * this method will return the code stream in an array. Each char will be a
@@ -754,26 +817,28 @@ class CINcode128 extends CINBarcode1D {
      *
      * @param string $text
      * @param string $seq
+     *
      * @return string[][]
      */
-    private function createBinaryStream($text, $seq) {
+    private function createBinaryStream($text, $seq)
+    {
         $c = strlen($seq);
 
-        $data = array(); // code stream
+        $data     = array(); // code stream
         $indcheck = array(); // index for checksum
 
         $currentEncoding = 0;
         if ($this->starting_text === 'A') {
             $currentEncoding = 0;
-            $indcheck[] = self::KEY_STARTA;
+            $indcheck[]      = self::KEY_STARTA;
             $this->lastTable = 'A';
         } elseif ($this->starting_text === 'B') {
             $currentEncoding = 1;
-            $indcheck[] = self::KEY_STARTB;
+            $indcheck[]      = self::KEY_STARTB;
             $this->lastTable = 'B';
         } elseif ($this->starting_text === 'C') {
             $currentEncoding = 2;
-            $indcheck[] = self::KEY_STARTC;
+            $indcheck[]      = self::KEY_STARTC;
             $this->lastTable = 'C';
         }
 
@@ -781,20 +846,20 @@ class CINcode128 extends CINBarcode1D {
 
         $temporaryEncoding = -1;
         for ($i = 0, $counter = 0; $i < $c; $i++) {
-            $input = $seq[$i];
+            $input  = $seq[$i];
             $inputI = intval($input);
             if ($input === '.') {
                 $this->encodeChar($data, $currentEncoding, $seq, $text, $i, $counter, $indcheck);
                 if ($temporaryEncoding !== -1) {
-                    $currentEncoding = $temporaryEncoding;
+                    $currentEncoding   = $temporaryEncoding;
                     $temporaryEncoding = -1;
                 }
             } elseif ($input >= 'A' && $input <= 'B') {
                 // We shift
-                $encoding = ord($input) - 65;
-                $shift = $this->shift[$currentEncoding][$encoding];
+                $encoding   = ord($input) - 65;
+                $shift      = $this->shift[$currentEncoding][$encoding];
                 $indcheck[] = $shift;
-                $data[] = $this->code[$shift];
+                $data[]     = $this->code[$shift];
                 if ($temporaryEncoding === -1) {
                     $temporaryEncoding = $currentEncoding;
                 }
@@ -806,9 +871,9 @@ class CINcode128 extends CINBarcode1D {
                 // We latch
                 $latch = $this->latch[$currentEncoding][$inputI];
                 if ($latch !== null) {
-                    $indcheck[] = $latch;
+                    $indcheck[]      = $latch;
                     $this->lastTable = chr(65 + $inputI);
-                    $data[] = $this->code[$latch];
+                    $data[]          = $this->code[$latch];
                     $currentEncoding = $inputI;
                 }
             }
@@ -817,25 +882,27 @@ class CINcode128 extends CINBarcode1D {
         return array($indcheck, $data);
     }
 
+
     /**
      * Encodes characters, base on its encoding and sequence
      *
-     * @param int[] $data
-     * @param int $encoding
+     * @param int[]  $data
+     * @param int    $encoding
      * @param string $seq
      * @param string $text
-     * @param int $i
-     * @param int $counter
-     * @param int[] $indcheck
+     * @param int    $i
+     * @param int    $counter
+     * @param int[]  $indcheck
      */
-    private function encodeChar(&$data, $encoding, $seq, $text, &$i, &$counter, &$indcheck) {
+    private function encodeChar(&$data, $encoding, $seq, $text, &$i, &$counter, &$indcheck)
+    {
         if (isset($seq[$i + 1]) && $seq[$i + 1] === 'F') {
             // We have a flag !!
             if ($text[$counter + 1] === 'F') {
-                $number = $text[$counter + 2];
-                $fnc = $this->fnc[$encoding][$number - 1];
+                $number     = $text[$counter + 2];
+                $fnc        = $this->fnc[$encoding][$number - 1];
                 $indcheck[] = $fnc;
-                $data[] = $this->code[$fnc];
+                $data[]     = $this->code[$fnc];
 
                 // Skip F + number
                 $counter += 2;
@@ -847,21 +914,22 @@ class CINcode128 extends CINBarcode1D {
         } else {
             if ($encoding === 2) {
                 // We take 2 numbers in the same time
-                $code = (int)substr($text, $counter, 2);
+                $code       = (int) substr($text, $counter, 2);
                 $indcheck[] = $code;
-                $data[] = $this->code[$code];
+                $data[]     = $this->code[$code];
                 $counter++;
                 $i++;
             } else {
-                $keys = ($encoding === 0) ? $this->keysA : $this->keysB;
-                $pos = strpos($keys, $text[$counter]);
+                $keys       = ($encoding === 0) ? $this->keysA : $this->keysB;
+                $pos        = strpos($keys, $text[$counter]);
                 $indcheck[] = $pos;
-                $data[] = $this->code[$pos];
+                $data[]     = $this->code[$pos];
             }
         }
 
         $counter++;
     }
+
 
     /**
      * Saves data into the classes.
@@ -873,12 +941,14 @@ class CINcode128 extends CINBarcode1D {
      *
      * @param array $data
      */
-    private function setData($data) {
+    private function setData($data)
+    {
         $this->indcheck = $data[0];
-        $this->data = $data[1];
+        $this->data     = $data[1];
         $this->calculateChecksum();
         $this->data[] = $this->code[$this->checksumValue];
         $this->data[] = $this->code[self::KEY_STOP];
     }
 }
+
 ?>

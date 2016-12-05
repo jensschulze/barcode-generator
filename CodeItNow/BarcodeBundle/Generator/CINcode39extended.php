@@ -5,13 +5,13 @@
  * Sub-Class - Code 39 Extended
  *
  *--------------------------------------------------------------------
- * 
+ *
  */
 namespace CodeItNow\BarcodeBundle\Generator;
-use CodeItNow\BarcodeBundle\Generator\CINParseException;
-use CodeItNow\BarcodeBundle\Generator\CINcode39;
 
-class CINcode39extended extends CINcode39 {
+
+class CINcode39extended extends CINcode39
+{
     const EXTENDED_1 = 39;
     const EXTENDED_2 = 40;
     const EXTENDED_3 = 41;
@@ -19,10 +19,12 @@ class CINcode39extended extends CINcode39 {
 
     protected $indcheck, $data;
 
+
     /**
      * Constructor.
      */
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
 
         // We just put parenthesis around special characters.
@@ -32,15 +34,19 @@ class CINcode39extended extends CINcode39 {
         $this->keys[self::EXTENDED_4] = '(%)';
     }
 
+
     /**
      * Parses the text before displaying it.
      *
      * @param mixed $text
+     *
+     * @throws CINParseException
      */
-    public function parse($text) {
+    public function parse($text)
+    {
         $this->text = $text;
 
-        $data = array();
+        $data     = array();
         $indcheck = array();
 
         $c = strlen($this->text);
@@ -57,26 +63,26 @@ class CINcode39extended extends CINcode39 {
                         $v = $extended[$j];
                         if ($v === '$') {
                             $indcheck[] = self::EXTENDED_1;
-                            $data[] = $this->code[self::EXTENDED_1];
+                            $data[]     = $this->code[self::EXTENDED_1];
                         } elseif ($v === '%') {
                             $indcheck[] = self::EXTENDED_2;
-                            $data[] = $this->code[self::EXTENDED_2];
+                            $data[]     = $this->code[self::EXTENDED_2];
                         } elseif ($v === '/') {
                             $indcheck[] = self::EXTENDED_3;
-                            $data[] = $this->code[self::EXTENDED_3];
+                            $data[]     = $this->code[self::EXTENDED_3];
                         } elseif ($v === '+') {
                             $indcheck[] = self::EXTENDED_4;
-                            $data[] = $this->code[self::EXTENDED_4];
+                            $data[]     = $this->code[self::EXTENDED_4];
                         } else {
-                            $pos2 = array_search($v, $this->keys);
+                            $pos2       = array_search($v, $this->keys);
                             $indcheck[] = $pos2;
-                            $data[] = $this->code[$pos2];
+                            $data[]     = $this->code[$pos2];
                         }
                     }
                 }
             } else {
                 $indcheck[] = $pos;
-                $data[] = $this->code[$pos];
+                $data[]     = $this->code[$pos];
             }
         }
 
@@ -84,12 +90,14 @@ class CINcode39extended extends CINcode39 {
         $this->addDefaultLabel();
     }
 
+
     /**
      * Draws the barcode.
      *
      * @param resource $im
      */
-    public function draw($im) {
+    public function draw($im)
+    {
         // Starting *
         $this->drawChar($im, $this->code[$this->starting], true);
         $c = count($this->data);
@@ -107,16 +115,19 @@ class CINcode39extended extends CINcode39 {
         $this->drawText($im, 0, 0, $this->positionX, $this->thickness);
     }
 
+
     /**
      * Returns the maximal size of a barcode.
      *
      * @param int $w
      * @param int $h
+     *
      * @return int[]
      */
-    public function getDimension($w, $h) {
-        $textlength = 13 * count($this->data);
-        $startlength = 13;
+    public function getDimension($w, $h)
+    {
+        $textlength     = 13 * count($this->data);
+        $startlength    = 13;
         $checksumlength = 0;
         if ($this->checksum === true) {
             $checksumlength = 13;
@@ -126,13 +137,16 @@ class CINcode39extended extends CINcode39 {
 
         $w += $startlength + $textlength + $checksumlength + $endlength;
         $h += $this->thickness;
+
         return CINBarcode1D::getDimension($w, $h);
     }
+
 
     /**
      * Validates the input.
      */
-    protected function validate() {
+    protected function validate()
+    {
         $c = count($this->data);
         if ($c === 0) {
             throw new CINParseException('code39extended', 'No data has been entered.');
@@ -141,18 +155,21 @@ class CINcode39extended extends CINcode39 {
         parent::validate();
     }
 
+
     /**
      * Overloaded method to calculate checksum.
      */
-    protected function calculateChecksum() {
+    protected function calculateChecksum()
+    {
         $this->checksumValue = 0;
-        $c = count($this->indcheck);
+        $c                   = count($this->indcheck);
         for ($i = 0; $i < $c; $i++) {
             $this->checksumValue += $this->indcheck[$i];
         }
 
         $this->checksumValue = $this->checksumValue % 43;
     }
+
 
     /**
      * Saves data into the classes.
@@ -164,19 +181,23 @@ class CINcode39extended extends CINcode39 {
      *
      * @param array $data
      */
-    private function setData($data) {
+    private function setData($data)
+    {
         $this->indcheck = $data[0];
-        $this->data = $data[1];
+        $this->data     = $data[1];
         $this->calculateChecksum();
     }
+
 
     /**
      * Returns the extended reprensentation of the character.
      *
      * @param string $char
+     *
      * @return string
      */
-    private static function getExtendedVersion($char) {
+    private static function getExtendedVersion($char)
+    {
         $o = ord($char);
         if ($o === 0) {
             return '%U';
@@ -205,4 +226,5 @@ class CINcode39extended extends CINcode39 {
         }
     }
 }
+
 ?>

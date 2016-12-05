@@ -14,19 +14,26 @@
  *--------------------------------------------------------------------
  */
 namespace CodeItNow\BarcodeBundle\Generator;
-use CodeItNow\BarcodeBundle\Generator\CINParseException;
-use CodeItNow\BarcodeBundle\Generator\CINBarcode;
-use CodeItNow\BarcodeBundle\Generator\CINBarcode1D;
-use CodeItNow\BarcodeBundle\Generator\CINLabel;
 
-class CINean8 extends CINBarcode1D {
+
+class CINean8 extends CINBarcode1D
+{
+    /**
+     * @var CINLabel
+     */
     protected $labelLeft = null;
+
+    /**
+     * @var CINLabel
+     */
     protected $labelRight = null;
+
 
     /**
      * Constructor.
      */
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
 
         $this->keys = array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9');
@@ -47,12 +54,14 @@ class CINean8 extends CINBarcode1D {
         );
     }
 
+
     /**
      * Draws the barcode.
      *
      * @param resource $im
      */
-    public function draw($im) {
+    public function draw($im)
+    {
         // Checksum
         $this->calculateChecksum();
         $temp_text = $this->text . $this->keys[$this->checksumValue];
@@ -83,38 +92,45 @@ class CINean8 extends CINBarcode1D {
         }
     }
 
+
     /**
      * Returns the maximal size of a barcode.
      *
      * @param int $w
      * @param int $h
+     *
      * @return int[]
      */
-    public function getDimension($w, $h) {
-        $startlength = 3;
+    public function getDimension($w, $h)
+    {
+        $startlength  = 3;
         $centerlength = 5;
-        $textlength = 8 * 7;
-        $endlength = 3;
+        $textlength   = 8 * 7;
+        $endlength    = 3;
 
         $w += $startlength + $centerlength + $textlength + $endlength;
         $h += $this->thickness;
+
         return parent::getDimension($w, $h);
     }
+
 
     /**
      * Adds the default label.
      */
-    protected function addDefaultLabel() {
+    protected function addDefaultLabel()
+    {
         if ($this->isDefaultEanLabelEnabled()) {
             $this->processChecksum();
             $label = $this->getLabel();
-            $font = $this->font;
+            $font  = $this->font;
 
-            $this->labelLeft = new CINLabel(substr($label, 0, 4), $font, CINLabel::POSITION_BOTTOM, CINLabel::ALIGN_LEFT);
+            $this->labelLeft    = new CINLabel(substr($label, 0, 4), $font, CINLabel::POSITION_BOTTOM, CINLabel::ALIGN_LEFT);
             $labelLeftDimension = $this->labelLeft->getDimension();
             $this->labelLeft->setOffset(($this->scale * 30 - $labelLeftDimension[0]) / 2 + $this->scale * 2);
 
-            $this->labelRight = new CINLabel(substr($label, 4, 3) . $this->keys[$this->checksumValue], $font, CINLabel::POSITION_BOTTOM, CINLabel::ALIGN_LEFT);
+            $this->labelRight    = new CINLabel(substr($label, 4, 3) . $this->keys[$this->checksumValue], $font, CINLabel::POSITION_BOTTOM,
+                CINLabel::ALIGN_LEFT);
             $labelRightDimension = $this->labelRight->getDimension();
             $this->labelRight->setOffset(($this->scale * 30 - $labelRightDimension[0]) / 2 + $this->scale * 34);
 
@@ -123,21 +139,26 @@ class CINean8 extends CINBarcode1D {
         }
     }
 
+
     /**
      * Checks if the default ean label is enabled.
      *
      * @return bool
      */
-    protected function isDefaultEanLabelEnabled() {
+    protected function isDefaultEanLabelEnabled()
+    {
         $label = $this->getLabel();
-        $font = $this->font;
+        $font  = $this->font;
+
         return $label !== null && $label !== '' && $font !== null && $this->defaultLabel !== null;
     }
+
 
     /**
      * Validates the input.
      */
-    protected function validate() {
+    protected function validate()
+    {
         $c = strlen($this->text);
         if ($c === 0) {
             throw new CINParseException('ean8', 'No data has been entered.');
@@ -160,26 +181,28 @@ class CINean8 extends CINBarcode1D {
         parent::validate();
     }
 
+
     /**
      * Overloaded method to calculate checksum.
      */
-    protected function calculateChecksum() {
+    protected function calculateChecksum()
+    {
         // Calculating Checksum
         // Consider the right-most digit of the message to be in an "odd" position,
         // and assign odd/even to each character moving from right to left
         // Odd Position = 3, Even Position = 1
         // Multiply it by the number
         // Add all of that and do 10-(?mod10)
-        $odd = true;
+        $odd                 = true;
         $this->checksumValue = 0;
-        $c = strlen($this->text);
+        $c                   = strlen($this->text);
         for ($i = $c; $i > 0; $i--) {
             if ($odd === true) {
                 $multiplier = 3;
-                $odd = false;
+                $odd        = false;
             } else {
                 $multiplier = 1;
-                $odd = true;
+                $odd        = true;
             }
 
             if (!isset($this->keys[$this->text[$i - 1]])) {
@@ -192,10 +215,12 @@ class CINean8 extends CINBarcode1D {
         $this->checksumValue = (10 - $this->checksumValue % 10) % 10;
     }
 
+
     /**
      * Overloaded method to display the checksum.
      */
-    protected function processChecksum() {
+    protected function processChecksum()
+    {
         if ($this->checksumValue === false) { // Calculate the checksum only once
             $this->calculateChecksum();
         }
@@ -207,13 +232,15 @@ class CINean8 extends CINBarcode1D {
         return false;
     }
 
+
     /**
      * Draws the extended bars on the image.
      *
      * @param resource $im
-     * @param int $plus
+     * @param int      $plus
      */
-    private function drawExtendedBars($im, $plus) {
+    private function drawExtendedBars($im, $plus)
+    {
         $rememberX = $this->positionX;
         $rememberH = $this->thickness;
 
@@ -240,4 +267,5 @@ class CINean8 extends CINBarcode1D {
         $this->thickness = $rememberH;
     }
 }
+
 ?>

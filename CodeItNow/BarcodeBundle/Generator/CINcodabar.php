@@ -5,59 +5,64 @@
  * Sub-Class - Codabar
  *
  *--------------------------------------------------------------------
- * 
+ *
  */
 namespace CodeItNow\BarcodeBundle\Generator;
-use CodeItNow\BarcodeBundle\Generator\CINParseException;
-use CodeItNow\BarcodeBundle\Generator\CINBarcode1D;
 
-class CINcodabar extends CINBarcode1D {
+
+class CINcodabar extends CINBarcode1D
+{
     /**
      * Constructor.
      */
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
 
         $this->keys = array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '-', '$', ':', '/', '.', '+', 'A', 'B', 'C', 'D');
         $this->code = array(    // 0 added to add an extra space
-            '00000110',     /* 0 */
-            '00001100',     /* 1 */
-            '00010010',     /* 2 */
-            '11000000',     /* 3 */
-            '00100100',     /* 4 */
-            '10000100',     /* 5 */
-            '01000010',     /* 6 */
-            '01001000',     /* 7 */
-            '01100000',     /* 8 */
-            '10010000',     /* 9 */
-            '00011000',     /* - */
-            '00110000',     /* $ */
-            '10001010',     /* : */
-            '10100010',     /* / */
-            '10101000',     /* . */
-            '00111110',     /* + */
-            '00110100',     /* A */
-            '01010010',     /* B */
-            '00010110',     /* C */
-            '00011100'      /* D */
+                                '00000110',     /* 0 */
+                                '00001100',     /* 1 */
+                                '00010010',     /* 2 */
+                                '11000000',     /* 3 */
+                                '00100100',     /* 4 */
+                                '10000100',     /* 5 */
+                                '01000010',     /* 6 */
+                                '01001000',     /* 7 */
+                                '01100000',     /* 8 */
+                                '10010000',     /* 9 */
+                                '00011000',     /* - */
+                                '00110000',     /* $ */
+                                '10001010',     /* : */
+                                '10100010',     /* / */
+                                '10101000',     /* . */
+                                '00111110',     /* + */
+                                '00110100',     /* A */
+                                '01010010',     /* B */
+                                '00010110',     /* C */
+                                '00011100'      /* D */
         );
     }
+
 
     /**
      * Parses the text before displaying it.
      *
      * @param mixed $text
      */
-    public function parse($text) {
+    public function parse($text)
+    {
         parent::parse(strtoupper($text));    // Only Capital Letters are Allowed
     }
+
 
     /**
      * Draws the barcode.
      *
      * @param resource $im
      */
-    public function draw($im) {
+    public function draw($im)
+    {
         $c = strlen($this->text);
         for ($i = 0; $i < $c; $i++) {
             $this->drawChar($im, $this->findCode($this->text[$i]), true);
@@ -66,16 +71,19 @@ class CINcodabar extends CINBarcode1D {
         $this->drawText($im, 0, 0, $this->positionX, $this->thickness);
     }
 
+
     /**
      * Returns the maximal size of a barcode.
      *
      * @param int $w
      * @param int $h
+     *
      * @return int[]
      */
-    public function getDimension($w, $h) {
+    public function getDimension($w, $h)
+    {
         $textLength = 0;
-        $c = strlen($this->text);
+        $c          = strlen($this->text);
         for ($i = 0; $i < $c; $i++) {
             $index = $this->findIndex($this->text[$i]);
             if ($index !== false) {
@@ -86,13 +94,16 @@ class CINcodabar extends CINBarcode1D {
 
         $w += $textLength;
         $h += $this->thickness;
+
         return parent::getDimension($w, $h);
     }
+
 
     /**
      * Validates the input.
      */
-    protected function validate() {
+    protected function validate()
+    {
         $c = strlen($this->text);
         if ($c === 0) {
             throw new CINParseException('codabar', 'No data has been entered.');
@@ -119,4 +130,5 @@ class CINcodabar extends CINBarcode1D {
         parent::validate();
     }
 }
+
 ?>

@@ -5,35 +5,68 @@
  * Holds all type of barcodes for 1D generation
  *
  *--------------------------------------------------------------------
- * 
+ *
  */
 namespace CodeItNow\BarcodeBundle\Generator;
-use CodeItNow\BarcodeBundle\Generator\CINArgumentException;
-use CodeItNow\BarcodeBundle\Generator\CINBarcode1D;
-use CodeItNow\BarcodeBundle\Generator\CINFontPhp;
-use CodeItNow\BarcodeBundle\Generator\CINFontFile;
-use CodeItNow\BarcodeBundle\Generator\CINLabel;
 
 
-abstract class CINBarcode1D extends CINBarcode {
+abstract class CINBarcode1D extends CINBarcode
+{
     const SIZE_SPACING_FONT = 5;
 
     const AUTO_LABEL = '##!!AUTO_LABEL!!##';
 
+    /**
+     * @var int
+     */
     protected $thickness;       // int
+
+    /**
+     * @var string[]
+     */
     protected $keys, $code;     // string[]
+
+    /**
+     * @var int
+     */
     protected $positionX;       // int
+
+    /**
+     * @var CINFont
+     */
     protected $font;            // CINFont
+
+    /**
+     * @var string
+     */
     protected $text;            // string
+
+    /**
+     * @var int|int[]
+     */
     protected $checksumValue;   // int or int[]
+
+    /**
+     * @var bool
+     */
     protected $displayChecksum; // bool
+
+    /**
+     * @var string
+     */
     protected $label;           // string
+
+    /**
+     * @var CINLabel
+     */
     protected $defaultLabel;    // CINLabel
+
 
     /**
      * Constructor.
      */
-    protected function __construct() {
+    protected function __construct()
+    {
         parent::__construct();
 
         $this->setThickness(30);
@@ -43,19 +76,22 @@ abstract class CINBarcode1D extends CINBarcode {
         $this->setLabel(self::AUTO_LABEL);
         $this->setFont(new CINFontPhp(5));
 
-        $this->text = '';
+        $this->text          = '';
         $this->checksumValue = false;
-        $this->positionX = 0;
+        $this->positionX     = 0;
     }
+
 
     /**
      * Gets the thickness.
      *
      * @return int
      */
-    public function getThickness() {
+    public function getThickness()
+    {
         return $this->thickness;
     }
+
 
     /**
      * Sets the thickness.
@@ -63,8 +99,10 @@ abstract class CINBarcode1D extends CINBarcode {
      * @param int $thickness
      *
      * @return CINBarcode1D
+     * @throws CINArgumentException
      */
-    public function setThickness($thickness) {
+    public function setThickness($thickness)
+    {
         $thickness = intval($thickness);
         if ($thickness <= 0) {
             throw new CINArgumentException('The thickness must be larger than 0.', 'thickness');
@@ -75,13 +113,15 @@ abstract class CINBarcode1D extends CINBarcode {
         return $this;
     }
 
+
     /**
      * Gets the label.
      * If the label was set to CINBarcode1D::AUTO_LABEL, the label will display the value from the text parsed.
      *
      * @return string
      */
-    public function getLabel() {
+    public function getLabel()
+    {
         $label = $this->label;
         if ($this->label === self::AUTO_LABEL) {
             $label = $this->text;
@@ -93,6 +133,7 @@ abstract class CINBarcode1D extends CINBarcode {
         return $label;
     }
 
+
     /**
      * Sets the label.
      * You can use CINBarcode::AUTO_LABEL to have the label automatically written based on the parsed text.
@@ -101,20 +142,24 @@ abstract class CINBarcode1D extends CINBarcode {
      *
      * @return CINBarcode1D
      */
-    public function setLabel($label) {
+    public function setLabel($label)
+    {
         $this->label = $label;
 
         return $this;
     }
+
 
     /**
      * Gets the font.
      *
      * @return CINFont
      */
-    public function getFont() {
+    public function getFont()
+    {
         return $this->font;
     }
+
 
     /**
      * Sets the font.
@@ -123,7 +168,8 @@ abstract class CINBarcode1D extends CINBarcode {
      *
      * @return CINBarcode1D
      */
-    public function setFont($font) {
+    public function setFont($font)
+    {
         if (is_int($font)) {
             if ($font === 0) {
                 $font = null;
@@ -137,13 +183,15 @@ abstract class CINBarcode1D extends CINBarcode {
         return $this;
     }
 
+
     /**
      * Parses the text before displaying it.
      *
      * @param mixed $text
      */
-    public function parse($text) {
-        $this->text = $text;
+    public function parse($text)
+    {
+        $this->text          = $text;
         $this->checksumValue = false; // Reset checksumValue
         $this->validate();
 
@@ -152,15 +200,18 @@ abstract class CINBarcode1D extends CINBarcode {
         $this->addDefaultLabel();
     }
 
+
     /**
      * Gets the checksum of a Barcode.
      * If no checksum is available, return FALSE.
      *
      * @return string
      */
-    public function getChecksum() {
+    public function getChecksum()
+    {
         return $this->processChecksum();
     }
+
 
     /**
      * Sets if the checksum is displayed with the label or not.
@@ -170,18 +221,21 @@ abstract class CINBarcode1D extends CINBarcode {
      *
      * @return CINBarcode1D
      */
-    public function setDisplayChecksum($displayChecksum) {
-        $this->displayChecksum = (bool)$displayChecksum;
+    public function setDisplayChecksum($displayChecksum)
+    {
+        $this->displayChecksum = (bool) $displayChecksum;
 
         return $this;
     }
 
+
     /**
      * Adds the default label.
      */
-    protected function addDefaultLabel() {
+    protected function addDefaultLabel()
+    {
         $label = $this->getLabel();
-        $font = $this->font;
+        $font  = $this->font;
         if ($label !== null && $label !== '' && $font !== null && $this->defaultLabel !== null) {
             $this->defaultLabel->setText($label);
             $this->defaultLabel->setFont($font);
@@ -189,45 +243,55 @@ abstract class CINBarcode1D extends CINBarcode {
         }
     }
 
+
     /**
      * Validates the input
      */
-    protected function validate() {
+    protected function validate()
+    {
         // No validation in the abstract class.
     }
+
 
     /**
      * Returns the index in $keys (useful for checksum).
      *
      * @param mixed $var
+     *
      * @return mixed
      */
-    protected function findIndex($var) {
+    protected function findIndex($var)
+    {
         return array_search($var, $this->keys);
     }
+
 
     /**
      * Returns the code of the char (useful for drawing bars).
      *
      * @param mixed $var
+     *
      * @return string
      */
-    protected function findCode($var) {
+    protected function findCode($var)
+    {
         return $this->code[$this->findIndex($var)];
     }
+
 
     /**
      * Draws all chars thanks to $code. If $startBar is true, the line begins by a space.
      * If $startBar is false, the line begins by a bar.
      *
      * @param resource $im
-     * @param string $code
-     * @param boolean $startBar
+     * @param string   $code
+     * @param boolean  $startBar
      */
-    protected function drawChar($im, $code, $startBar = true) {
-        $colors = array(CINBarcode::COLOR_FG, CINBarcode::COLOR_BG);
+    protected function drawChar($im, $code, $startBar = true)
+    {
+        $colors       = array(CINBarcode::COLOR_FG, CINBarcode::COLOR_BG);
         $currentColor = $startBar ? 0 : 1;
-        $c = strlen($code);
+        $c            = strlen($code);
         for ($i = 0; $i < $c; $i++) {
             for ($j = 0; $j < intval($code[$i]) + 1; $j++) {
                 $this->drawSingleBar($im, $colors[$currentColor]);
@@ -238,30 +302,37 @@ abstract class CINBarcode1D extends CINBarcode {
         }
     }
 
+
     /**
      * Draws a Bar of $color depending of the resolution.
      *
-     * @param resource $img
+     * @param     $im
      * @param int $color
      */
-    protected function drawSingleBar($im, $color) {
+    protected function drawSingleBar($im, $color)
+    {
         $this->drawFilledRectangle($im, $this->positionX, 0, $this->positionX, $this->thickness - 1, $color);
     }
+
 
     /**
      * Moving the pointer right to write a bar.
      */
-    protected function nextX() {
+    protected function nextX()
+    {
         $this->positionX++;
     }
+
 
     /**
      * Method that saves FALSE into the checksumValue. This means no checksum
      * but this method should be overriden when needed.
      */
-    protected function calculateChecksum() {
+    protected function calculateChecksum()
+    {
         $this->checksumValue = false;
     }
+
 
     /**
      * Returns FALSE because there is no checksum. This method should be
@@ -269,8 +340,10 @@ abstract class CINBarcode1D extends CINBarcode {
      *
      * @return string
      */
-    protected function processChecksum() {
+    protected function processChecksum()
+    {
         return false;
     }
 }
+
 ?>

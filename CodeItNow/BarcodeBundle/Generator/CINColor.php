@@ -5,13 +5,15 @@
  * Holds Color in RGB Format.
  *
  *--------------------------------------------------------------------
- * 
+ *
  */
 namespace CodeItNow\BarcodeBundle\Generator;
 
-class CINColor {
+class CINColor
+{
     protected $r, $g, $b;    // int Hexadecimal Value
     protected $transparent;
+
 
     /**
      * Save RGB value into the classes.
@@ -24,9 +26,10 @@ class CINColor {
      *
      * @param mixed ...
      */
-    public function __construct() {
+    public function __construct()
+    {
         $args = func_get_args();
-        $c = count($args);
+        $c    = count($args);
         if ($c === 3) {
             $this->r = intval($args[0]);
             $this->g = intval($args[1]);
@@ -51,6 +54,7 @@ class CINColor {
         }
     }
 
+
     /**
      * Sets the color transparent.
      *
@@ -58,46 +62,56 @@ class CINColor {
      *
      * @return CINColor
      */
-    public function setTransparent($transparent) {
+    public function setTransparent($transparent)
+    {
         $this->transparent = $transparent;
 
         return $this;
     }
+
 
     /**
      * Returns Red Color.
      *
      * @return int
      */
-    public function r() {
+    public function r()
+    {
         return $this->r;
     }
+
 
     /**
      * Returns Green Color.
      *
      * @return int
      */
-    public function g() {
+    public function g()
+    {
         return $this->g;
     }
+
 
     /**
      * Returns Blue Color.
      *
      * @return int
      */
-    public function b() {
+    public function b()
+    {
         return $this->b;
     }
+
 
     /**
      * Returns the int value for PHP color.
      *
      * @param resource $im
+     *
      * @return int
      */
-    public function allocate(&$im) {
+    public function allocate(&$im)
+    {
         $allocated = imagecolorallocate($im, $this->r, $this->g, $this->b);
         if ($this->transparent) {
             return imagecolortransparent($im, $allocated);
@@ -106,6 +120,7 @@ class CINColor {
         }
     }
 
+
     /**
      * Returns class of CINColor depending of the string color.
      *
@@ -113,9 +128,12 @@ class CINColor {
      *
      * @param string $code
      * @param string $default
+     *
+     * @return int
      */
-    public static function getColor($code, $default = 'white') {
-        switch(strtolower($code)) {
+    public static function getColor($code, $default = 'white')
+    {
+        switch (strtolower($code)) {
             case '':
             case 'white':
                 return 0xffffff;
@@ -156,4 +174,5 @@ class CINColor {
         }
     }
 }
+
 ?>
