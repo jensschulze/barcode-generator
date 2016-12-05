@@ -43,9 +43,13 @@ class CINFontPhp implements CINFont {
      * Sets the text associated to the font.
      *
      * @param string text
+     *
+     * @return CINFontPhp
      */
     public function setText($text) {
         $this->text = $text;
+
+        return $this;
     }
 
     /**
@@ -61,6 +65,8 @@ class CINFontPhp implements CINFont {
      * Sets the rotation in degree.
      *
      * @param int
+     *
+     * @return CINFontPhp
      */
     public function setRotationAngle($rotationAngle) {
         $this->rotationAngle = (int)$rotationAngle;
@@ -69,6 +75,8 @@ class CINFontPhp implements CINFont {
         }
 
         $this->rotationAngle = (360 - $this->rotationAngle) % 360;
+
+        return $this;
     }
 
     /**
@@ -84,9 +92,13 @@ class CINFontPhp implements CINFont {
      * Sets the background color.
      *
      * @param CINColor $backgroundColor
+     *
+     * @return CINFontPhp
      */
     public function setBackgroundColor($backgroundColor) {
         $this->backgroundColor = $backgroundColor;
+
+        return $this;
     }
 
     /**
@@ -102,9 +114,13 @@ class CINFontPhp implements CINFont {
      * Sets the foreground color.
      *
      * @param CINColor $foregroundColor
+     *
+     * @return CINFontPhp
      */
     public function setForegroundColor($foregroundColor) {
         $this->foregroundColor = $foregroundColor;
+
+        return $this;
     }
 
     /**

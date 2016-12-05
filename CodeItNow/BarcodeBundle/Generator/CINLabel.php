@@ -68,10 +68,14 @@ class CINLabel {
      * Sets the text.
      *
      * @param string $text
+     *
+     * @return $this
      */
     public function setText($text) {
         $this->text = $text;
         $this->font->setText($this->text);
+
+        return $this;
     }
 
     /**
@@ -87,6 +91,8 @@ class CINLabel {
      * Sets the font.
      *
      * @param CINFont $font
+     *
+     * @return $this
      */
     public function setFont($font) {
         if ($font === null) {
@@ -98,6 +104,8 @@ class CINLabel {
         $this->font->setRotationAngle($this->rotationAngle);
         $this->font->setBackgroundColor($this->backgroundColor);
         $this->font->setForegroundColor($this->foregroundColor);
+
+        return $this;
     }
 
     /**
@@ -113,6 +121,8 @@ class CINLabel {
      * Sets the text position for drawing.
      *
      * @param int $position
+     *
+     * @return $this
      */
     public function setPosition($position) {
         $position = intval($position);
@@ -121,6 +131,8 @@ class CINLabel {
         }
 
         $this->position = $position;
+
+        return $this;
     }
 
     /**
@@ -136,6 +148,8 @@ class CINLabel {
      * Sets the text alignment for drawing.
      *
      * @param int $alignment
+     *
+     * @return $this
      */
     public function setAlignment($alignment) {
         $alignment = intval($alignment);
@@ -144,6 +158,8 @@ class CINLabel {
         }
 
         $this->alignment = $alignment;
+
+        return $this;
     }
 
     /**
@@ -159,9 +175,13 @@ class CINLabel {
      * Sets the offset.
      *
      * @param int $offset
+     *
+     * @return $this
      */
     public function setOffset($offset) {
         $this->offset = intval($offset);
+
+        return $this;
     }
 
     /**
@@ -177,9 +197,13 @@ class CINLabel {
      * Sets the spacing.
      *
      * @param int $spacing
+     *
+     * @return $this
      */
     public function setSpacing($spacing) {
         $this->spacing = max(0, intval($spacing));
+
+        return $this;
     }
 
     /**
@@ -195,10 +219,14 @@ class CINLabel {
      * Sets the rotation angle in degree.
      *
      * @param int $rotationAngle
+     *
+     * @return $this
      */
     public function setRotationAngle($rotationAngle) {
         $this->rotationAngle = intval($rotationAngle);
         $this->font->setRotationAngle($this->rotationAngle);
+
+        return $this;
     }
 
     /**
@@ -214,10 +242,14 @@ class CINLabel {
      * Sets the background color in case of rotation.
      *
      * @param CINColor $backgroundColor
+     *
+     * @return $this
      */
     public /*internal*/ function setBackgroundColor($backgroundColor) {
         $this->backgroundColor = $backgroundColor;
         $this->font->setBackgroundColor($this->backgroundColor);
+
+        return $this;
     }
 
     /**
@@ -233,10 +265,14 @@ class CINLabel {
      * Sets the foreground color.
      *
      * @param CINColor $foregroundColor
+     *
+     * @return $this
      */
     public function setForegroundColor($foregroundColor) {
         $this->foregroundColor = $foregroundColor;
         $this->font->setForegroundColor($this->foregroundColor);
+
+        return $this;
     }
 
     /**

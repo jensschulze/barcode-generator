@@ -56,6 +56,8 @@ abstract class CINBarcode {
      * value or simply a language code (white, black, yellow...) or hex value.
      *
      * @param mixed $code
+     *
+     * @return $this
      */
     public function setForegroundColor($code) {
         if ($code instanceof CINColor) {
@@ -63,6 +65,8 @@ abstract class CINBarcode {
         } else {
             $this->colorFg = new CINColor($code);
         }
+
+        return $this;
     }
 
     /**
@@ -79,6 +83,8 @@ abstract class CINBarcode {
      * value or simply a language code (white, black, yellow...) or hex value.
      *
      * @param mixed $code
+     *
+     * @return $this
      */
     public function setBackgroundColor($code) {
         if ($code instanceof CINColor) {
@@ -90,6 +96,8 @@ abstract class CINBarcode {
         foreach ($this->labels as $label) {
             $label->setBackgroundColor($this->colorBg);
         }
+
+        return $this;
     }
 
     /**
@@ -97,10 +105,14 @@ abstract class CINBarcode {
      *
      * @param mixed $fg
      * @param mixed $bg
+     *
+     * @return $this
      */
     public function setColor($fg, $bg) {
         $this->setForegroundColor($fg);
         $this->setBackgroundColor($bg);
+
+        return $this;
     }
 
     /**
@@ -117,6 +129,8 @@ abstract class CINBarcode {
      * If the scale is lower than 1, an exception is raised.
      *
      * @param int $scale
+     *
+     * @return $this
      */
     public function setScale($scale) {
         $scale = intval($scale);
@@ -125,6 +139,8 @@ abstract class CINBarcode {
         }
 
         $this->scale = $scale;
+
+        return $this;
     }
 
     /**
@@ -219,6 +235,8 @@ abstract class CINBarcode {
      * Sets the X offset.
      *
      * @param int $offsetX
+     *
+     * @return $this
      */
     public function setOffsetX($offsetX) {
         $offsetX = intval($offsetX);
@@ -227,6 +245,8 @@ abstract class CINBarcode {
         }
 
         $this->offsetX = $offsetX;
+
+        return $this;
     }
 
     /**
@@ -242,6 +262,8 @@ abstract class CINBarcode {
      * Sets the Y offset.
      *
      * @param int $offsetY
+     *
+     * @return $this
      */
     public function setOffsetY($offsetY) {
         $offsetY = intval($offsetY);
@@ -250,6 +272,8 @@ abstract class CINBarcode {
         }
 
         $this->offsetY = $offsetY;
+
+        return $this;
     }
 
     /**

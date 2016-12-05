@@ -61,6 +61,8 @@ abstract class CINBarcode1D extends CINBarcode {
      * Sets the thickness.
      *
      * @param int $thickness
+     *
+     * @return CINBarcode1D
      */
     public function setThickness($thickness) {
         $thickness = intval($thickness);
@@ -69,6 +71,8 @@ abstract class CINBarcode1D extends CINBarcode {
         }
 
         $this->thickness = $thickness;
+
+        return $this;
     }
 
     /**
@@ -94,9 +98,13 @@ abstract class CINBarcode1D extends CINBarcode {
      * You can use CINBarcode::AUTO_LABEL to have the label automatically written based on the parsed text.
      *
      * @param string $label
+     *
+     * @return CINBarcode1D
      */
     public function setLabel($label) {
         $this->label = $label;
+
+        return $this;
     }
 
     /**
@@ -112,6 +120,8 @@ abstract class CINBarcode1D extends CINBarcode {
      * Sets the font.
      *
      * @param mixed $font CINFont or int
+     *
+     * @return CINBarcode1D
      */
     public function setFont($font) {
         if (is_int($font)) {
@@ -123,6 +133,8 @@ abstract class CINBarcode1D extends CINBarcode {
         }
 
         $this->font = $font;
+
+        return $this;
     }
 
     /**
@@ -155,9 +167,13 @@ abstract class CINBarcode1D extends CINBarcode {
      * The checksum must be activated in some case to make this variable effective.
      *
      * @param boolean $displayChecksum
+     *
+     * @return CINBarcode1D
      */
     public function setDisplayChecksum($displayChecksum) {
         $this->displayChecksum = (bool)$displayChecksum;
+
+        return $this;
     }
 
     /**

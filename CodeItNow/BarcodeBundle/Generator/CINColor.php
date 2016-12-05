@@ -55,9 +55,13 @@ class CINColor {
      * Sets the color transparent.
      *
      * @param bool $transparent
+     *
+     * @return CINColor
      */
     public function setTransparent($transparent) {
         $this->transparent = $transparent;
+
+        return $this;
     }
 
     /**
