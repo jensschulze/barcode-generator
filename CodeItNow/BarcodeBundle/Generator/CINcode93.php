@@ -11,8 +11,7 @@
  *--------------------------------------------------------------------
  */
 namespace CodeItNow\BarcodeBundle\Generator;
-use CodeItNow\BarcodeBundle\Generator\CINParseException;
-use CodeItNow\BarcodeBundle\Generator\CINBarcode1D;
+
 
 class CINcode93 extends CINBarcode1D {
     const EXTENDED_1 = 43;
@@ -83,10 +82,13 @@ class CINcode93 extends CINBarcode1D {
         );
     }
 
+
     /**
      * Parses the text before displaying it.
      *
      * @param mixed $text
+     *
+     * @throws CINParseException
      */
     public function parse($text) {
         $this->text = $text;

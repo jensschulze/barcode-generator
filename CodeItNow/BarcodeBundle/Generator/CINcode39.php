@@ -8,8 +8,7 @@
  * 
  */
 namespace CodeItNow\BarcodeBundle\Generator;
-use CodeItNow\BarcodeBundle\Generator\CINParseException;
-use CodeItNow\BarcodeBundle\Generator\CINBarcode1D;
+
 
 class CINcode39 extends CINBarcode1D {
     protected $starting, $ending;

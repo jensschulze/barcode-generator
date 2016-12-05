@@ -8,19 +8,26 @@
  * 
  */
 namespace CodeItNow\BarcodeBundle\Generator;
-use CodeItNow\BarcodeBundle\Generator\CINColor;
-use CodeItNow\BarcodeBundle\Generator\CINLabel;
-use CodeItNow\BarcodeBundle\Generator\CINArgumentException;
-use CodeItNow\BarcodeBundle\Generator\CINDrawException;
+
 
 abstract class CINBarcode {
     const COLOR_BG = 0;
     const COLOR_FG = 1;
 
+    /**
+     * @var CINColor
+     */
     protected $colorFg, $colorBg;       // Color Foreground, Barckground
+
     protected $scale;                   // Scale of the graphic, default: 1
+
     protected $offsetX, $offsetY;       // Position where to start the drawing
-    protected $labels = array();        // Array of CINLabel
+
+    /**
+     * @var CINLabel[]
+     */
+    protected $labels = array();
+
     protected $pushLabel = array(0, 0); // Push for the label, left and top
 
     /**
@@ -112,11 +119,14 @@ abstract class CINBarcode {
         return $this->scale;
     }
 
+
     /**
      * Sets the scale of the barcode in pixel.
      * If the scale is lower than 1, an exception is raised.
      *
      * @param int $scale
+     *
+     * @throws CINArgumentException
      */
     public function setScale($scale) {
         $scale = intval($scale);
@@ -134,6 +144,7 @@ abstract class CINBarcode {
      */
     public abstract function draw($im);
 
+
     /**
      * Returns the maximal size of a barcode.
      * [0]->width
@@ -141,6 +152,7 @@ abstract class CINBarcode {
      *
      * @param int $w
      * @param int $h
+     *
      * @return int[]
      */
     public function getDimension($w, $h) {
@@ -215,10 +227,13 @@ abstract class CINBarcode {
         return $this->offsetX;
     }
 
+
     /**
      * Sets the X offset.
      *
      * @param int $offsetX
+     *
+     * @throws CINArgumentException
      */
     public function setOffsetX($offsetX) {
         $offsetX = intval($offsetX);
@@ -238,10 +253,13 @@ abstract class CINBarcode {
         return $this->offsetY;
     }
 
+
     /**
      * Sets the Y offset.
      *
      * @param int $offsetY
+     *
+     * @throws CINArgumentException
      */
     public function setOffsetY($offsetY) {
         $offsetY = intval($offsetY);
@@ -289,6 +307,7 @@ abstract class CINBarcode {
         $this->labels = array();
     }
 
+
     /**
      * Draws the text.
      * The coordinate passed are the positions of the barcode.
@@ -296,10 +315,10 @@ abstract class CINBarcode {
      * $x2 and $y2 represent the bottom right corner.
      *
      * @param resource $im
-     * @param int $x1
-     * @param int $y1
-     * @param int $x2
-     * @param int $y2
+     * @param int      $x1
+     * @param int      $y1
+     * @param int      $x2
+     * @param int      $y2
      */
     protected function drawText($im, $x1, $y1, $x2, $y2) {
         foreach ($this->labels as $label) {
@@ -311,13 +330,14 @@ abstract class CINBarcode {
         }
     }
 
+
     /**
      * Draws 1 pixel on the resource at a specific position with a determined color.
      *
      * @param resource $im
-     * @param int $x
-     * @param int $y
-     * @param int $color
+     * @param int      $x
+     * @param int      $y
+     * @param int      $color
      */
     protected function drawPixel($im, $x, $y, $color = self::COLOR_FG) {
         $xR = ($x + $this->offsetX) * $this->scale + $this->pushLabel[0];
@@ -358,15 +378,16 @@ abstract class CINBarcode {
         }
     }
 
+
     /**
      * Draws a filled rectangle on the resource at a specific position with a determined color.
      *
      * @param resource $im
-     * @param int $x1
-     * @param int $y1
-     * @param int $x2
-     * @param int $y2
-     * @param int $color
+     * @param int      $x1
+     * @param int      $y1
+     * @param int      $x2
+     * @param int      $y2
+     * @param int      $color
      */
     protected function drawFilledRectangle($im, $x1, $y1, $x2, $y2, $color = self::COLOR_FG) {
         if ($x1 > $x2) { // Swap
@@ -385,12 +406,14 @@ abstract class CINBarcode {
             $this->getColor($im, $color));
     }
 
+
     /**
      * Allocates the color based on the integer.
      *
      * @param resource $im
-     * @param int $color
-     * @return resource
+     * @param int      $color
+     *
+     * @return int
      */
     protected function getColor($im, $color) {
         if ($color === self::COLOR_BG) {
@@ -400,10 +423,12 @@ abstract class CINBarcode {
         }
     }
 
+
     /**
      * Returning the biggest label widths for LEFT/RIGHT and heights for TOP/BOTTOM.
      *
      * @param bool $reversed
+     *
      * @return CINLabel[]
      */
     private function getBiggestLabels($reversed = false) {

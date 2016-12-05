@@ -14,13 +14,17 @@
  *--------------------------------------------------------------------
  */
 namespace CodeItNow\BarcodeBundle\Generator;
-use CodeItNow\BarcodeBundle\Generator\CINParseException;
-use CodeItNow\BarcodeBundle\Generator\CINBarcode;
-use CodeItNow\BarcodeBundle\Generator\CINBarcode1D;
-use CodeItNow\BarcodeBundle\Generator\CINLabel;
+
 
 class CINean8 extends CINBarcode1D {
+    /**
+     * @var CINLabel
+     */
     protected $labelLeft = null;
+
+    /**
+     * @var CINLabel
+     */
     protected $labelRight = null;
 
     /**

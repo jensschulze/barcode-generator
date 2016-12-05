@@ -14,8 +14,7 @@
  *--------------------------------------------------------------------
  */
 namespace CodeItNow\BarcodeBundle\Generator;
-use CodeItNow\BarcodeBundle\Generator\CINParseException;
-use CodeItNow\BarcodeBundle\Generator\CINBarcode1D;
+
 
 define('CODE128_A',    1);            // Table A
 define('CODE128_B',    2);            // Table B
@@ -61,7 +60,7 @@ class CINcode128 extends CINBarcode1D {
     /**
      * Constructor.
      *
-     * @param char $start
+     * @param string $start
      */
     public function __construct($start = null) {
         parent::__construct();
@@ -210,6 +209,7 @@ class CINcode128 extends CINBarcode1D {
         $this->METHOD        = array(CODE128_A => 'A', CODE128_B => 'B', CODE128_C => 'C');
     }
 
+
     /**
      * Specifies the start code. Can be 'A', 'B', 'C', or null
      *  - Table A: Capitals + ASCII 0-31 + punct
@@ -220,6 +220,8 @@ class CINcode128 extends CINBarcode1D {
      * The default is null.
      *
      * @param string $table
+     *
+     * @throws CINArgumentException
      */
     public function setStart($table) {
         if ($table !== 'A' && $table !== 'B' && $table !== 'C' && $table !== null) {
@@ -423,13 +425,16 @@ class CINcode128 extends CINBarcode1D {
         }
     }
 
+
     /**
      * Extracts the ~ value from the $text at the $pos.
      * If the tilde is not ~~, ~F1, ~F2, ~F3, ~F4; an error is raised.
      *
      * @param string $text
-     * @param int $pos
+     * @param int    $pos
+     *
      * @return string
+     * @throws CINParseException
      */
     private static function extractTilde($text, $pos) {
         if ($text[$pos] === '~') {
@@ -460,13 +465,16 @@ class CINcode128 extends CINBarcode1D {
         }
     }
 
+
     /**
      * Gets the "dotted" sequence for the $text based on the $currentMode.
      * There is also a check if we use the special tilde ~
      *
      * @param string $text
      * @param string $currentMode
+     *
      * @return string
+     * @throws CINParseException
      */
     private function getSequenceParsed($text, $currentMode) {
         if ($this->tilde) {
@@ -515,12 +523,15 @@ class CINcode128 extends CINBarcode1D {
         }
     }
 
+
     /**
      * Parses the text and returns the appropriate sequence for the Table A.
      *
      * @param string $text
      * @param string $currentMode
+     *
      * @return string
+     * @throws CINParseException
      */
     private function setParseA($text, &$currentMode) {
         $tmp = preg_quote($this->keysA, '/');
@@ -542,12 +553,15 @@ class CINcode128 extends CINBarcode1D {
         }
     }
 
+
     /**
      * Parses the text and returns the appropriate sequence for the Table B.
      *
      * @param string $text
      * @param string $currentMode
+     *
      * @return string
+     * @throws CINParseException
      */
     private function setParseB($text, &$currentMode) {
         $tmp = preg_quote($this->keysB, '/');
@@ -591,13 +605,16 @@ class CINcode128 extends CINBarcode1D {
         }
     }
 
+
     /**
      * Depending on the $text, it will return the correct
      * sequence to encode the text.
      *
      * @param string $text
      * @param string $starting_text
+     *
      * @return string
+     * @throws CINParseException
      */
     private function getSequence($text, &$starting_text) {
         $e = 10000;

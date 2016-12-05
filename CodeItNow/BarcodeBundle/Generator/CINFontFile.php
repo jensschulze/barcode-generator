@@ -8,9 +8,7 @@
  * 
  */
 namespace CodeItNow\BarcodeBundle\Generator;
-use CodeItNow\BarcodeBundle\Generator\CINArgumentException;
-use CodeItNow\BarcodeBundle\Generator\CINFont;
-use CodeItNow\BarcodeBundle\Generator\CINColor;
+
 
 class CINFontFile implements CINFont {
     const PHP_BOX_FIX = 0;
@@ -23,11 +21,14 @@ class CINFontFile implements CINFont {
     private $box;
     private $boxFix;
 
+
     /**
      * Constructor.
      *
      * @param string $fontPath path to the file
-     * @param int $size size in point
+     * @param int    $size     size in point
+     *
+     * @throws CINArgumentException
      */
     public function __construct($fontPath, $size) {
         if (!file_exists($fontPath)) {
@@ -53,7 +54,7 @@ class CINFontFile implements CINFont {
     /**
      * Sets the text associated to the font.
      *
-     * @param string text
+     * @param string $text
      */
     public function setText($text) {
         $this->text = $text;

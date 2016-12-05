@@ -17,16 +17,25 @@
  *--------------------------------------------------------------------
  */
 namespace CodeItNow\BarcodeBundle\Generator;
-use CodeItNow\BarcodeBundle\Generator\CINParseException;
-use CodeItNow\BarcodeBundle\Generator\CINBarcode;
-use CodeItNow\BarcodeBundle\Generator\CINBarcode1D;
-use CodeItNow\BarcodeBundle\Generator\CINLabel;
+
 
 class CINupce extends CINBarcode1D {
     protected $codeParity = array();
     protected $upce;
+
+    /**
+     * @var CINLabel
+     */
     protected $labelLeft = null;
+
+    /**
+     * @var CINLabel
+     */
     protected $labelCenter = null;
+
+    /**
+     * @var CINLabel
+     */
     protected $labelRight = null;
 
     /**

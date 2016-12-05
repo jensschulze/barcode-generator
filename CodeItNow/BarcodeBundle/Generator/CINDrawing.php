@@ -9,9 +9,8 @@
  * 
  */
 namespace CodeItNow\BarcodeBundle\Generator;
-use CodeItNow\BarcodeBundle\Generator\CINBarcode;
-use CodeItNow\BarcodeBundle\Generator\CINColor;
-use CodeItNow\BarcodeBundle\Generator\CINDrawException;
+
+
 use CodeItNow\BarcodeBundle\Generator\Drawer\CINDrawJPG;
 use CodeItNow\BarcodeBundle\Generator\Drawer\CINDrawPNG;
 
@@ -21,20 +20,43 @@ class CINDrawing {
     const IMG_FORMAT_GIF = 3;
     const IMG_FORMAT_WBMP = 4;
 
-    private $w, $h;         // int
-    private $color;         // CINColor
-    private $filename;      // char *
+    /**
+     * @var int
+     */
+    private $w, $h;
+
+    /**
+     * @var CINColor
+     */
+    private $color;
+
+    /**
+     * @var string
+     */
+    private $filename;
+
     private $im;            // {object}
-    private $barcode;       // CINBarcode
-    private $dpi;           // float
-    private $rotateDegree;  // float
+
+    /**
+     * @var CINBarcode
+     */
+    private $barcode;
+
+    /**
+     * @var float
+     */
+    private $dpi;
+
+    /**
+     * @var float
+     */
+    private $rotateDegree;
+
 
     /**
      * Constructor.
      *
-     * @param int $w
-     * @param int $h
-     * @param string filename
+     * @param string   $filename
      * @param CINColor $color
      */
     public function __construct($filename = null, CINColor $color) {
@@ -61,10 +83,11 @@ class CINDrawing {
         return $this->filename;
     }
 
+
     /**
      * Sets the filename.
      *
-     * @param string $filaneme
+     * @param $filename
      */
     public function setFilename($filename) {
         $this->filename = $filename;
@@ -151,11 +174,14 @@ class CINDrawing {
         $this->barcode->draw($this->im);
     }
 
+
     /**
      * Saves $im into the file (many format available).
      *
      * @param int $image_style
      * @param int $quality
+     *
+     * @throws CINDrawException
      */
     public function finish($image_style = self::IMG_FORMAT_PNG, $quality = 100) {
         $drawer = null;
@@ -197,7 +223,7 @@ class CINDrawing {
     /**
      * Writes the Error on the picture.
      *
-     * @param Exception $exception
+     * @param \Throwable $exception
      */
     public function drawException($exception) {
         $this->w = 1;

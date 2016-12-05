@@ -8,11 +8,6 @@
  * 
  */
 namespace CodeItNow\BarcodeBundle\Generator;
-use CodeItNow\BarcodeBundle\Generator\CINArgumentException;
-use CodeItNow\BarcodeBundle\Generator\CINBarcode1D;
-use CodeItNow\BarcodeBundle\Generator\CINFontPhp;
-use CodeItNow\BarcodeBundle\Generator\CINFontFile;
-use CodeItNow\BarcodeBundle\Generator\CINLabel;
 
 
 abstract class CINBarcode1D extends CINBarcode {
@@ -20,14 +15,49 @@ abstract class CINBarcode1D extends CINBarcode {
 
     const AUTO_LABEL = '##!!AUTO_LABEL!!##';
 
+    /**
+     * @var int
+     */
     protected $thickness;       // int
+
+    /**
+     * @var string[]
+     */
     protected $keys, $code;     // string[]
+
+    /**
+     * @var int
+     */
     protected $positionX;       // int
+
+    /**
+     * @var CINFont
+     */
     protected $font;            // CINFont
+
+    /**
+     * @var string
+     */
     protected $text;            // string
+
+    /**
+     * @var int|int[]
+     */
     protected $checksumValue;   // int or int[]
+
+    /**
+     * @var bool
+     */
     protected $displayChecksum; // bool
+
+    /**
+     * @var string
+     */
     protected $label;           // string
+
+    /**
+     * @var CINLabel
+     */
     protected $defaultLabel;    // CINLabel
 
     /**
@@ -57,10 +87,13 @@ abstract class CINBarcode1D extends CINBarcode {
         return $this->thickness;
     }
 
+
     /**
      * Sets the thickness.
      *
      * @param int $thickness
+     *
+     * @throws CINArgumentException
      */
     public function setThickness($thickness) {
         $thickness = intval($thickness);
@@ -222,10 +255,11 @@ abstract class CINBarcode1D extends CINBarcode {
         }
     }
 
+
     /**
      * Draws a Bar of $color depending of the resolution.
      *
-     * @param resource $img
+     * @param     $im
      * @param int $color
      */
     protected function drawSingleBar($im, $color) {

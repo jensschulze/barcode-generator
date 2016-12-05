@@ -18,10 +18,6 @@
  */
 namespace CodeItNow\BarcodeBundle\Generator;
 
-use CodeItNow\BarcodeBundle\Generator\CINParseException;
-use CodeItNow\BarcodeBundle\Generator\CINBarcode1D;
-use CodeItNow\BarcodeBundle\Generator\CINLabel;
-
 
 class CINupcext5 extends CINBarcode1D {
     protected $codeParity = array();

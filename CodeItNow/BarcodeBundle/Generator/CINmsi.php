@@ -7,9 +7,7 @@
  *--------------------------------------------------------------------
  */
 namespace CodeItNow\BarcodeBundle\Generator;
-use CodeItNow\BarcodeBundle\Generator\CINParseException;
-use CodeItNow\BarcodeBundle\Generator\CINArgumentException;
-use CodeItNow\BarcodeBundle\Generator\CINBarcode1D;
+
 
 class CINmsi extends CINBarcode1D {
     private $checksum;
@@ -37,10 +35,13 @@ class CINmsi extends CINBarcode1D {
         $this->setChecksum(0);
     }
 
+
     /**
      * Sets how many checksums we display. 0 to 2.
      *
      * @param int $checksum
+     *
+     * @throws CINArgumentException
      */
     public function setChecksum($checksum) {
         $checksum = intval($checksum);

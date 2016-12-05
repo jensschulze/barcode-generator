@@ -8,8 +8,7 @@
  * 
  */
 namespace CodeItNow\BarcodeBundle\Generator;
-use CodeItNow\BarcodeBundle\Generator\CINParseException;
-use CodeItNow\BarcodeBundle\Generator\CINcode39;
+
 
 class CINcode39extended extends CINcode39 {
     const EXTENDED_1 = 39;
@@ -32,10 +31,13 @@ class CINcode39extended extends CINcode39 {
         $this->keys[self::EXTENDED_4] = '(%)';
     }
 
+
     /**
      * Parses the text before displaying it.
      *
      * @param mixed $text
+     *
+     * @throws CINParseException
      */
     public function parse($text) {
         $this->text = $text;

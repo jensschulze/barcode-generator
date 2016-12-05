@@ -8,8 +8,7 @@
  * 
  */
 namespace CodeItNow\BarcodeBundle\Generator;
-use CodeItNow\BarcodeBundle\Generator\CINParseException;
-use CodeItNow\BarcodeBundle\Generator\CINcode128;
+
 
 class CINgs1128 extends CINcode128 {
     const KIND_OF_DATA = 0;
@@ -35,7 +34,7 @@ class CINgs1128 extends CINcode128 {
     /**
      * Constructors
      *
-     * @param char $start
+     * @param string $start
      */
     public function __construct($start = null) {
         if ($start === null) {
@@ -243,10 +242,11 @@ class CINgs1128 extends CINcode128 {
         parent::parse($this->parseGs1128($text));
     }
 
+
     /**
      * Formats data for gs1-128.
-     *
      * @return string
+     * @throws CINParseException
      */
     private function formatGs1128() {
         $formatedText = '~F1';
@@ -296,11 +296,14 @@ class CINgs1128 extends CINcode128 {
         return $formatedText;
     }
 
+
     /**
      * Parses the text to gs1-128.
      *
      * @param mixed $text
+     *
      * @return mixed
+     * @throws CINParseException
      */
     private function parseGs1128($text) {
         /* We format correctly what the user gives */
@@ -339,11 +342,12 @@ class CINgs1128 extends CINcode128 {
         return $this->formatGs1128();
     }
 
+
     /**
      * Splits the id and the content for each application identifiers (AIs).
      *
      * @param string $text
-     * @param int $cmpt
+     *
      * @return bool
      */
     private function parseContent($text) {
@@ -467,13 +471,16 @@ class CINgs1128 extends CINcode128 {
         return false;
     }
 
+
     /**
      * Finds ID with formated content.
      *
      * @param string $id
-     * @param bool $yAlreadySet
+     * @param bool   $yAlreadySet
      * @param string $realNameId
+     *
      * @return mixed
+     * @throws CINParseException
      */
     private function findIdFormated($id, &$yAlreadySet, &$realNameId) {
         $pos = strpos($id, ')');
@@ -497,13 +504,16 @@ class CINgs1128 extends CINcode128 {
         }
     }
 
+
     /**
      * Finds ID with non-formated content.
      *
      * @param string $id
-     * @param bool $yAlreadySet
+     * @param bool   $yAlreadySet
      * @param string $realNameId
+     *
      * @return mixed
+     * @throws CINParseException
      */
     private function findIdNotFormated($id, &$yAlreadySet, &$realNameId) {
         $tofind = $id;
@@ -523,13 +533,16 @@ class CINgs1128 extends CINcode128 {
         return false;
     }
 
+
     /**
      * Checks confirmity of the content.
      *
      * @param string $content
      * @param string $id
      * @param string $realNameId
+     *
      * @return bool
+     * @throws CINParseException
      */
     private function checkConformity(&$content, $id, $realNameId) {
         switch ($this->identifiersAi[$realNameId][self::KIND_OF_DATA]) {
@@ -583,14 +596,17 @@ class CINgs1128 extends CINcode128 {
         return true;
     }
 
+
     /**
      * Verifies the checksum.
      *
      * @param string $content
      * @param string $id
-     * @param int $realNameId
-     * @param int $checksumAdded
+     * @param int    $realNameId
+     * @param int    $checksumAdded
+     *
      * @return bool
+     * @throws CINParseException
      */
     private function checkChecksum(&$content, $id, $realNameId, &$checksumAdded) {
         if ($this->identifiersAi[$realNameId][self::CHECKSUM]) {
@@ -612,14 +628,17 @@ class CINgs1128 extends CINcode128 {
         return true;
     }
 
+
     /**
      * Checks vars "y".
      *
      * @param string $content
      * @param string $id
-     * @param bool $yAlreadySet
-     * @param int $decimalPointRemoved
+     * @param bool   $yAlreadySet
+     * @param int    $decimalPointRemoved
+     *
      * @return bool
+     * @throws CINParseException
      */
     private function checkVars(&$content, &$id, $yAlreadySet, &$decimalPointRemoved) {
         $nbCharContent = strlen($content);

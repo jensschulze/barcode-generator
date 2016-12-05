@@ -9,6 +9,7 @@
  */
 namespace CodeItNow\BarcodeBundle\Generator;
 
+
 class JoinDraw {
     const ALIGN_RIGHT       = 0;
     const ALIGN_BOTTOM      = 0;
@@ -23,7 +24,7 @@ class JoinDraw {
 
     private $image1;
     private $image2;
-    private $alignement;
+    private $alignment;
     private $position;
     private $space;
     private $im;
@@ -75,7 +76,7 @@ class JoinDraw {
      *
      * @param int $size1
      * @param int $size2
-     * @param int $ailgnment
+     * @param int $alignment
      * @return int
      */
     private function findPosition($size1, $size2, $alignment) {

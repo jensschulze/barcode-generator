@@ -9,10 +9,7 @@
  *--------------------------------------------------------------------
  */
 namespace CodeItNow\BarcodeBundle\Generator;
-use CodeItNow\BarcodeBundle\Generator\CINParseException;
-use CodeItNow\BarcodeBundle\Generator\CINArgumentException;
-use CodeItNow\BarcodeBundle\Generator\CINBarcode;
-use CodeItNow\BarcodeBundle\Generator\CINBarcode1D;
+
 
 class CINintelligentmail extends CINBarcode1D {
     private $barcodeIdentifier;         // string
@@ -261,13 +258,16 @@ class CINintelligentmail extends CINBarcode1D {
         $this->quietZone = (bool)$quietZone;
     }
 
+
     /**
      * Sets the tracking code.
      *
-     * @param int $barcodeIdentifier 2-digit number. 2nd digit must be 0-4
+     * @param int $barcodeIdentifier     2-digit number. 2nd digit must be 0-4
      * @param int $serviceTypeIdentifier 3 digits
-     * @param int $mailerIdentifier 6 or 9 digits
-     * @param int $serialNumber 9 (if mailerId is 6) or 6 digits (if mailerId is 9)
+     * @param int $mailerIdentifier      6 or 9 digits
+     * @param int $serialNumber          9 (if mailerId is 6) or 6 digits (if mailerId is 9)
+     *
+     * @throws CINArgumentException
      */
     public function setTrackingCode($barcodeIdentifier, $serviceTypeIdentifier, $mailerIdentifier, $serialNumber) {
         $barcodeIdentifier = (string)(int)$barcodeIdentifier;
@@ -429,6 +429,7 @@ class CINintelligentmail extends CINBarcode1D {
         $this->positionX += 3;
     }
 
+
     /**
      * Executes Step 1: Conversion of Data Fields into Binary Data
      *
@@ -437,6 +438,7 @@ class CINintelligentmail extends CINBarcode1D {
      * @param string $serviceTypeIdentifier
      * @param string $mailerIdentifier
      * @param string $serialNumber
+     *
      * @return string BCNumber
      */
     private static function executeStep1($text, $barcodeIdentifier, $serviceTypeIdentifier, $mailerIdentifier, $serialNumber) {
@@ -446,10 +448,12 @@ class CINintelligentmail extends CINBarcode1D {
         return $number;
     }
 
+
     /**
      * Executes Step 2: Generation of 11-Bit CRC on Binary Data
      *
-     * @param $number BCNumber
+     * @param string $number BCNumber
+     *
      * @return int
      */
     private static function executeStep2($number) {
@@ -628,11 +632,13 @@ class CINintelligentmail extends CINBarcode1D {
         return $number;
     }
 
+
     /**
      * Transforms a BCNumber into unsigned char*.
      *
      * @param string $dec BCNumber
-     * @param string
+     *
+     * @return string
      */
     private static function bcdecuc($dec) {
         $last = bcmod($dec, 256);

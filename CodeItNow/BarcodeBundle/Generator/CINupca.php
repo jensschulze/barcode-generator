@@ -15,10 +15,7 @@
  *--------------------------------------------------------------------
  */
 namespace CodeItNow\BarcodeBundle\Generator;
-use CodeItNow\BarcodeBundle\Generator\CINParseException;
-use CodeItNow\BarcodeBundle\Generator\CINBarcode;
-use CodeItNow\BarcodeBundle\Generator\CINean13;
-use CodeItNow\BarcodeBundle\Generator\CINLabel;
+
 
 class CINupca extends CINean13 {
     protected $labelRight = null;

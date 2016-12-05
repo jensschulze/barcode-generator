@@ -14,9 +14,6 @@
  */
 namespace CodeItNow\BarcodeBundle\Generator;
 
-use CodeItNow\BarcodeBundle\Generator\CINParseException;
-use CodeItNow\BarcodeBundle\Generator\CINArgumentException;
-use CodeItNow\BarcodeBundle\Generator\CINean13;
 
 class CINisbn extends CINean13 {
     const GS1_AUTO = 0;
@@ -51,6 +48,7 @@ class CINisbn extends CINean13 {
         parent::addDefaultLabel();
     }
 
+
     /**
      * Sets the first numbers of the barcode.
      *  - GS1_AUTO: Adds 978 before the code
@@ -58,6 +56,8 @@ class CINisbn extends CINean13 {
      *  - GS1_PREFIX979: Adds 979 before the code
      *
      * @param int $gs1
+     *
+     * @throws CINArgumentException
      */
     public function setGS1($gs1) {
         $gs1 = (int)$gs1;

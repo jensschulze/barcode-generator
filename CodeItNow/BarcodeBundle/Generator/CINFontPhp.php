@@ -8,8 +8,7 @@
  * 
  */
 namespace CodeItNow\BarcodeBundle\Generator;
-use CodeItNow\BarcodeBundle\Generator\CINFont;
-use CodeItNow\BarcodeBundle\Generator\CINColor;
+
 
 class CINFontPhp implements CINFont {
     private $font;
@@ -42,7 +41,7 @@ class CINFontPhp implements CINFont {
     /**
      * Sets the text associated to the font.
      *
-     * @param string text
+     * @param string $text
      */
     public function setText($text) {
         $this->text = $text;
@@ -124,13 +123,16 @@ class CINFontPhp implements CINFont {
         }
     }
 
+
     /**
      * Draws the text on the image at a specific position.
      * $x and $y represent the left bottom corner.
      *
      * @param resource $im
-     * @param int $x
-     * @param int $y
+     * @param int      $x
+     * @param int      $y
+     *
+     * @throws CINDrawException
      */
     public function draw($im, $x, $y) {
         if ($this->getRotationAngle() !== 0) {

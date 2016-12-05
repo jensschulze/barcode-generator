@@ -8,9 +8,7 @@
  * 
  */
 namespace CodeItNow\BarcodeBundle\Generator;
-use CodeItNow\BarcodeBundle\Generator\CINArgumentException;
-use CodeItNow\BarcodeBundle\Generator\CINFontPhp;
-use CodeItNow\BarcodeBundle\Generator\CINFontFile;
+
 
 class CINLabel {
     const POSITION_TOP = 0;
@@ -24,14 +22,30 @@ class CINLabel {
     const ALIGN_RIGHT = 2;
     const ALIGN_BOTTOM = 2;
 
+    /**
+     * @var CINFont
+     */
     private $font;
+
+    /**
+     * @var string
+     */
     private $text;
+
     private $position;
     private $alignment;
     private $offset;
     private $spacing;
     private $rotationAngle;
+
+    /**
+     * @var CINColor
+     */
     private $backgroundColor;
+
+    /**
+     * @var CINColor
+     */
     private $foregroundColor;
 
     /**
@@ -83,10 +97,13 @@ class CINLabel {
         return $this->font;
     }
 
+
     /**
      * Sets the font.
      *
      * @param CINFont $font
+     *
+     * @throws CINArgumentException
      */
     public function setFont($font) {
         if ($font === null) {
@@ -109,10 +126,13 @@ class CINLabel {
         return $this->position;
     }
 
+
     /**
      * Sets the text position for drawing.
      *
      * @param int $position
+     *
+     * @throws CINArgumentException
      */
     public function setPosition($position) {
         $position = intval($position);
@@ -132,10 +152,13 @@ class CINLabel {
         return $this->alignment;
     }
 
+
     /**
      * Sets the text alignment for drawing.
      *
      * @param int $alignment
+     *
+     * @throws CINArgumentException
      */
     public function setAlignment($alignment) {
         $alignment = intval($alignment);

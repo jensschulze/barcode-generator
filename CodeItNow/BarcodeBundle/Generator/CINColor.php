@@ -91,6 +91,7 @@ class CINColor {
      * Returns the int value for PHP color.
      *
      * @param resource $im
+     *
      * @return int
      */
     public function allocate(&$im) {
@@ -102,6 +103,7 @@ class CINColor {
         }
     }
 
+
     /**
      * Returns class of CINColor depending of the string color.
      *
@@ -109,6 +111,8 @@ class CINColor {
      *
      * @param string $code
      * @param string $default
+     *
+     * @return int
      */
     public static function getColor($code, $default = 'white') {
         switch(strtolower($code)) {
